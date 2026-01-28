@@ -192,15 +192,175 @@ h4 {
     display: inline-block;
     font-family: var(--font-mono);
     font-weight: 700;
-    /* Solid color that works with transforms - no background-clip issues */
-    color: #ff6b6b;
-    text-shadow:
-        0 0 10px rgba(168, 85, 247, 0.5),
-        0 0 20px rgba(0, 212, 255, 0.3);
+    color: var(--text-primary);
     position: relative;
     z-index: 9999;
-    /* Will-change for smooth animations */
     will-change: transform, opacity;
+}
+
+/* Button Glitch Effect for Transition */
+.btn-glitch-active {
+    position: relative;
+    color: transparent !important;
+    animation: btnShake 0.4s infinite;
+}
+
+.btn-glitch-active::before,
+.btn-glitch-active::after {
+    content: "Initialize Profile";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+    color: var(--neon-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-glitch-active::before {
+    color: #ff0000;
+    z-index: -1;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    transform: translate(-2px, -2px);
+    animation: glitch-anim-1 0.3s infinite linear alternate-reverse;
+}
+
+.btn-glitch-active::after {
+    color: #00ffff;
+    z-index: -2;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    transform: translate(2px, 2px);
+    animation: glitch-anim-2 0.3s infinite linear alternate-reverse;
+}
+
+/* Chaos Word Glitch on Return */
+.chaos-word.resolved {
+    animation: textGlitch 0.4s ease;
+}
+
+@keyframes btnShake {
+    0% {
+        transform: translate(0);
+    }
+
+    20% {
+        transform: translate(-2px, 1px);
+    }
+
+    40% {
+        transform: translate(2px, -1px);
+    }
+
+    60% {
+        transform: translate(-1px, -2px);
+    }
+
+    80% {
+        transform: translate(1px, 2px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+@keyframes glitch-anim-1 {
+    0% {
+        clip-path: inset(20% 0 80% 0);
+        transform: translate(-2px, 1px);
+    }
+
+    20% {
+        clip-path: inset(60% 0 10% 0);
+        transform: translate(2px, -1px);
+    }
+
+    40% {
+        clip-path: inset(40% 0 50% 0);
+        transform: translate(-2px, 2px);
+    }
+
+    60% {
+        clip-path: inset(80% 0 5% 0);
+        transform: translate(2px, -2px);
+    }
+
+    80% {
+        clip-path: inset(10% 0 70% 0);
+        transform: translate(-1px, 1px);
+    }
+
+    100% {
+        clip-path: inset(30% 0 20% 0);
+        transform: translate(1px, -1px);
+    }
+}
+
+@keyframes glitch-anim-2 {
+    0% {
+        clip-path: inset(10% 0 60% 0);
+        transform: translate(2px, -1px);
+    }
+
+    20% {
+        clip-path: inset(80% 0 5% 0);
+        transform: translate(-2px, 1px);
+    }
+
+    40% {
+        clip-path: inset(30% 0 20% 0);
+        transform: translate(2px, -1px);
+    }
+
+    60% {
+        clip-path: inset(10% 0 80% 0);
+        transform: translate(-1px, 2px);
+    }
+
+    80% {
+        clip-path: inset(50% 0 30% 0);
+        transform: translate(1px, -2px);
+    }
+
+    100% {
+        clip-path: inset(70% 0 10% 0);
+        transform: translate(-2px, 1px);
+    }
+}
+
+@keyframes textGlitch {
+    0% {
+        transform: skew(0deg);
+        filter: none;
+    }
+
+    20% {
+        transform: skew(-10deg);
+        filter: drop-shadow(-2px 0 red) drop-shadow(2px 0 cyan);
+    }
+
+    40% {
+        transform: skew(5deg);
+        filter: drop-shadow(2px 0 red) drop-shadow(-2px 0 cyan);
+    }
+
+    60% {
+        transform: skew(-5deg);
+        filter: invert(0.2);
+    }
+
+    80% {
+        transform: skew(2deg);
+        filter: none;
+    }
+
+    100% {
+        transform: skew(0deg);
+    }
+}
 }
 
 /* When chaos is resolved */

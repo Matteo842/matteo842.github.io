@@ -198,7 +198,7 @@ function initScrollAnimations() {
 }
 
 // ---- Smooth Scroll ----
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+document.querySelectorAll('a[href^="#"]:not(#init-profile-btn)').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
@@ -293,6 +293,9 @@ const ChaosEffect = {
 
         if (!chaosWord || !initBtn) return;
 
+        // Set data-content for glitch effect
+        initBtn.setAttribute('data-content', initBtn.innerText.trim());
+
         this.letters = Array.from(chaosWord.querySelectorAll('.chaos-letter'));
 
         // Fixed directions for each letter - moderate distances for visible explosion
@@ -348,6 +351,7 @@ const ChaosEffect = {
 
     returnLetters() {
         const chaosWord = document.getElementById('chaos-word');
+        const initBtn = document.getElementById('init-profile-btn');
 
         // Animate letters back to original positions
         this.letters.forEach((letter, i) => {
@@ -357,39 +361,45 @@ const ChaosEffect = {
                 rotation: 0,
                 opacity: 1,
                 duration: 0.8,
-                delay: i * 0.1,
-                ease: 'back.out(1.7)'
+                delay: i * 0.05,
+                ease: 'back.out(1.7)',
+                onComplete: () => {
+                    // Restore styles
+                    letter.style.position = '';
+                    letter.style.left = '';
+                    letter.style.top = '';
+                    letter.style.width = '';
+                    letter.style.margin = '';
+                    letter.style.zIndex = '';
+                    letter.style.transform = '';
+                }
             });
         });
 
-        // Flash effect and scroll after all return
-        const returnDuration = 800 + this.letters.length * 100 + 400;
+        const lettersReturnTime = 900;
+
+        // Sequence: Resolve -> Glitch Button -> Scroll
         setTimeout(() => {
             chaosWord.classList.add('resolved');
 
-            // Flash glow effect
-            gsap.to(chaosWord, {
-                textShadow: '0 0 40px rgba(0, 212, 255, 1), 0 0 80px rgba(168, 85, 247, 0.5)',
-                duration: 0.3,
-                yoyo: true,
-                repeat: 1,
-                onComplete: () => {
-                    gsap.to(chaosWord, { textShadow: 'none', duration: 0.5 });
+            // Activate glitch on button
+            if (initBtn) {
+                initBtn.classList.add('btn-glitch-active');
 
-                    // Scroll to projects
-                    setTimeout(() => {
-                        gsap.to(window, {
-                            duration: 1.2,
-                            scrollTo: { y: '#projects', offsetY: 50 },
-                            ease: 'power2.inOut'
-                        });
-                    }, 400);
-                }
-            });
+                // Wait while glitch plays, then scroll
+                setTimeout(() => {
+                    initBtn.classList.remove('btn-glitch-active');
 
-            // Reset the flag so the effect can't be triggered again
+                    gsap.to(window, {
+                        duration: 1.2,
+                        scrollTo: { y: '#projects', offsetY: 50 },
+                        ease: 'power2.inOut'
+                    });
+                }, 800);
+            }
+
             this.hasFlownAway = false;
-        }, returnDuration);
+        }, lettersReturnTime);
     }
 };
 
