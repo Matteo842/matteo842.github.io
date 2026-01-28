@@ -265,7 +265,39 @@ function generateCodeBackground() {
     codeBg.textContent = codeSnippets.join('\n').repeat(8);
 }
 
+// ---- Animate Number Counter ----
+function animateNumber(element, targetValue, duration = 2000, suffix = '+', prefix = '') {
+    const startValue = 0;
+    const startTime = performance.now();
+    
+    function updateNumber(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function for smooth animation (easeOutExpo)
+        const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+        
+        const currentValue = Math.floor(startValue + (targetValue - startValue) * easeProgress);
+        
+        // Format with thousands separator
+        const formattedValue = currentValue.toLocaleString();
+        element.textContent = `${prefix}${formattedValue}${suffix}`;
+        
+        if (progress < 1) {
+            requestAnimationFrame(updateNumber);
+        } else {
+            // Ensure final value is exact
+            element.textContent = `${prefix}${targetValue.toLocaleString()}${suffix}`;
+        }
+    }
+    
+    requestAnimationFrame(updateNumber);
+}
+
 // ---- GitHub Stats Fetcher ----
+let statsData = null;
+let statsAnimationTriggered = false;
+
 async function fetchGitHubStats() {
     try {
         // Fetch repository data from GitHub API
@@ -277,12 +309,8 @@ async function fetchGitHubStats() {
         
         const data = await response.json();
         
-        // Update stars count
+        // Get stars count
         const stars = data.stargazers_count;
-        const starsElements = document.querySelectorAll('[data-i18n="savestate_stars"]');
-        starsElements.forEach(el => {
-            el.textContent = `${stars}+ GitHub Stars`;
-        });
         
         // Fetch releases for download count
         const releasesResponse = await fetch('https://api.github.com/repos/Matteo842/SaveState/releases');
@@ -298,25 +326,58 @@ async function fetchGitHubStats() {
                 });
             });
             
-            // Update downloads count
-            const downloadsElements = document.querySelectorAll('[data-i18n="savestate_downloads"]');
-            downloadsElements.forEach(el => {
-                el.textContent = `${totalDownloads.toLocaleString()}+ Downloads`;
-            });
+            // Store data for later animation
+            statsData = {
+                downloads: totalDownloads,
+                stars: stars
+            };
             
-            // Update stats in demo section
-            const statNumbers = document.querySelectorAll('.stat-number');
-            if (statNumbers.length >= 2) {
-                statNumbers[0].textContent = `${totalDownloads.toLocaleString()}+`;
-                statNumbers[1].textContent = `${stars}+`;
-            }
+            // Setup ScrollTrigger to animate when card is visible
+            setupStatsAnimation();
         }
         
-        console.log('GitHub stats updated successfully');
+        console.log('GitHub stats fetched successfully');
     } catch (error) {
         console.warn('Could not fetch GitHub stats:', error);
         // Keep default values if fetch fails
     }
+}
+
+function setupStatsAnimation() {
+    if (!statsData) return;
+    
+    const saveStateCard = document.getElementById('savestate');
+    if (!saveStateCard) return;
+    
+    // Create ScrollTrigger that fires once when card enters viewport
+    ScrollTrigger.create({
+        trigger: saveStateCard,
+        start: 'top 80%',
+        once: true,
+        onEnter: () => {
+            if (statsAnimationTriggered) return;
+            statsAnimationTriggered = true;
+            
+            // Animate downloads count in badges
+            const downloadsElements = document.querySelectorAll('[data-i18n="savestate_downloads"]');
+            downloadsElements.forEach(el => {
+                animateNumber(el, statsData.downloads, 2000, '+ Downloads', '');
+            });
+            
+            // Animate stars count in badges
+            const starsElements = document.querySelectorAll('[data-i18n="savestate_stars"]');
+            starsElements.forEach(el => {
+                animateNumber(el, statsData.stars, 2000, '+ GitHub Stars', '');
+            });
+            
+            // Animate stats in demo section
+            const statNumbers = document.querySelectorAll('.stat-number');
+            if (statNumbers.length >= 2) {
+                animateNumber(statNumbers[0], statsData.downloads, 2000, '+', '');
+                animateNumber(statNumbers[1], statsData.stars, 2000, '+', '');
+            }
+        }
+    });
 }
 
 // ---- Initialize Everything ----
