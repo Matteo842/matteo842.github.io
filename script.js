@@ -341,8 +341,10 @@ document.addEventListener('DOMContentLoaded', () => {
 const ChaosEffect = {
     letters: [],
     flyAwayTargets: [],
-    hasFlownAway: false,
+    isExploded: false,
+    isReturning: false,
     originalPositions: [],
+    flyAwayAnimations: [],
 
     init() {
         const chaosWord = document.getElementById('chaos-word');
@@ -372,23 +374,27 @@ const ChaosEffect = {
         // Start flying away after a short delay to ensure page is loaded
         setTimeout(() => this.flyAway(), 500);
 
-        // Button click handler - bring letters back
+        // Button click handler - bring letters back (can be called anytime)
         initBtn.addEventListener('click', (e) => {
             e.preventDefault();
 
-            if (this.hasFlownAway) {
+            // Allow return even if explosion is still in progress
+            if (!this.isReturning) {
                 this.returnLetters();
             }
         });
     },
 
     flyAway() {
-        // Animate each letter to fly away
+        this.isExploded = true;
+        this.flyAwayAnimations = [];
+
+        // Animate each letter to fly away and store the animation
         this.letters.forEach((letter, i) => {
             const target = this.flyAwayTargets[i];
 
-            // Animate the letter directly using transform
-            gsap.to(letter, {
+            // Create and store the animation so we can kill it later if needed
+            const anim = gsap.to(letter, {
                 x: target.x,
                 y: target.y,
                 rotation: target.rot,
@@ -397,20 +403,25 @@ const ChaosEffect = {
                 delay: i * 0.15,
                 ease: 'power1.out'
             });
-        });
 
-        // Mark as flown away after animation completes
-        const totalDuration = 5000 + (this.letters.length * 150);
-        setTimeout(() => {
-            this.hasFlownAway = true;
-        }, totalDuration);
+            this.flyAwayAnimations.push(anim);
+        });
     },
 
     returnLetters() {
+        if (this.isReturning) return;
+        
+        this.isReturning = true;
         const chaosWord = document.getElementById('chaos-word');
         const initBtn = document.getElementById('init-profile-btn');
 
-        // Animate letters back to original positions
+        // Kill all ongoing fly-away animations
+        this.flyAwayAnimations.forEach(anim => {
+            if (anim) anim.kill();
+        });
+        this.flyAwayAnimations = [];
+
+        // Animate letters back to original positions from wherever they are
         this.letters.forEach((letter, i) => {
             gsap.to(letter, {
                 x: 0,
@@ -455,7 +466,8 @@ const ChaosEffect = {
                 }, 800);
             }
 
-            this.hasFlownAway = false;
+            this.isExploded = false;
+            this.isReturning = false;
         }, lettersReturnTime);
     }
 };
