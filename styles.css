@@ -232,7 +232,7 @@ h4 {
     top: 1rem;
     right: 1.5rem;
     font-size: 1.5rem;
-    color: var(--neon-blue);
+    color: #A10808;
     animation: pulse 2s ease-in-out infinite;
 }
 
@@ -256,32 +256,42 @@ h4 {
 }
 
 .glitch-hover:hover {
-    animation: glitch 0.3s ease;
+    animation: glitchSubtle 0.4s ease;
 }
 
-@keyframes glitch {
-    0% {
-        transform: translate(0);
+@keyframes glitchSubtle {
+
+    0%,
+    100% {
+        filter: none;
+        transform: none;
+    }
+
+    10% {
+        filter: hue-rotate(90deg) saturate(1.5);
     }
 
     20% {
-        transform: translate(-3px, 3px);
+        filter: none;
+        transform: translateX(2px);
+    }
+
+    30% {
+        filter: hue-rotate(-90deg) saturate(1.2);
+        transform: translateX(-2px);
     }
 
     40% {
-        transform: translate(3px, -3px);
+        filter: none;
+        transform: none;
+    }
+
+    50% {
+        filter: brightness(1.2) contrast(1.1);
     }
 
     60% {
-        transform: translate(-3px, -3px);
-    }
-
-    80% {
-        transform: translate(3px, 3px);
-    }
-
-    100% {
-        transform: translate(0);
+        filter: none;
     }
 }
 
@@ -296,27 +306,42 @@ h4 {
 }
 
 .glitch-hover:hover::before {
-    animation: glitchColor 0.3s ease;
-    left: 2px;
-    background: rgba(255, 0, 0, 0.1);
+    animation: glitchSlice 0.4s ease;
+    clip-path: polygon(0 15%, 100% 15%, 100% 30%, 0 30%);
+    background: rgba(161, 8, 8, 0.15);
 }
 
 .glitch-hover:hover::after {
-    animation: glitchColor 0.3s ease 0.05s;
-    left: -2px;
-    background: rgba(0, 255, 255, 0.1);
+    animation: glitchSlice 0.4s ease 0.1s;
+    clip-path: polygon(0 65%, 100% 65%, 100% 80%, 0 80%);
+    background: rgba(0, 212, 255, 0.1);
 }
 
-@keyframes glitchColor {
+@keyframes glitchSlice {
 
     0%,
     100% {
         opacity: 0;
+        transform: translateX(0);
     }
 
-    50% {
+    20%,
+    80% {
         opacity: 0.8;
     }
+
+    40% {
+        transform: translateX(10px);
+    }
+
+    60% {
+        transform: translateX(-10px);
+    }
+}
+
+/* SaveState Red Color */
+.text-savestate-red {
+    color: #A10808;
 }
 
 /* ---- Stats Badge ---- */
