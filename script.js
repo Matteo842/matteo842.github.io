@@ -265,6 +265,60 @@ function generateCodeBackground() {
     codeBg.textContent = codeSnippets.join('\n').repeat(8);
 }
 
+// ---- GitHub Stats Fetcher ----
+async function fetchGitHubStats() {
+    try {
+        // Fetch repository data from GitHub API
+        const response = await fetch('https://api.github.com/repos/Matteo842/SaveState');
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch GitHub data');
+        }
+        
+        const data = await response.json();
+        
+        // Update stars count
+        const stars = data.stargazers_count;
+        const starsElements = document.querySelectorAll('[data-i18n="savestate_stars"]');
+        starsElements.forEach(el => {
+            el.textContent = `${stars}+ GitHub Stars`;
+        });
+        
+        // Fetch releases for download count
+        const releasesResponse = await fetch('https://api.github.com/repos/Matteo842/SaveState/releases');
+        
+        if (releasesResponse.ok) {
+            const releases = await releasesResponse.json();
+            
+            // Calculate total downloads from all releases
+            let totalDownloads = 0;
+            releases.forEach(release => {
+                release.assets.forEach(asset => {
+                    totalDownloads += asset.download_count;
+                });
+            });
+            
+            // Update downloads count
+            const downloadsElements = document.querySelectorAll('[data-i18n="savestate_downloads"]');
+            downloadsElements.forEach(el => {
+                el.textContent = `${totalDownloads.toLocaleString()}+ Downloads`;
+            });
+            
+            // Update stats in demo section
+            const statNumbers = document.querySelectorAll('.stat-number');
+            if (statNumbers.length >= 2) {
+                statNumbers[0].textContent = `${totalDownloads.toLocaleString()}+`;
+                statNumbers[1].textContent = `${stars}+`;
+            }
+        }
+        
+        console.log('GitHub stats updated successfully');
+    } catch (error) {
+        console.warn('Could not fetch GitHub stats:', error);
+        // Keep default values if fetch fails
+    }
+}
+
 // ---- Initialize Everything ----
 document.addEventListener('DOMContentLoaded', () => {
     generateHexStream();
@@ -278,6 +332,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ---- Chaos Word Handler ----
     initChaosWord();
+    
+    // ---- Fetch GitHub Stats ----
+    fetchGitHubStats();
 });
 
 // ---- Chaos Word Effect (Outer Wilds style) ----
@@ -711,3 +768,34 @@ document.addEventListener('DOMContentLoaded', () => {
     SaveStateDemo.init();
 });
 
+
+// ---- Video Player Handler ----
+function initVideoPlayer() {
+    const trigger = document.getElementById('video-trigger');
+    if (!trigger) return;
+
+    trigger.addEventListener('click', function () {
+        if (this.classList.contains('playing')) return;
+
+        const videoId = this.dataset.videoId;
+        const start = this.dataset.start || 0;
+        const thumb = this.querySelector('.youtube-thumb');
+
+        // Create iframe
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&start=${start}&rel=0`;
+        iframe.title = "YouTube video player";
+        iframe.frameBorder = "0";
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        iframe.allowFullscreen = true;
+
+        // Clear thumb content and append iframe
+        thumb.innerHTML = '';
+        thumb.appendChild(iframe);
+
+        // Add playing class to remove hover effects
+        this.classList.add('playing');
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initVideoPlayer);
