@@ -145,7 +145,8 @@ h4 {
     text-align: center;
     padding: 2rem;
     position: relative;
-    overflow: hidden;
+    z-index: 100;
+    /* High z-index so chaos letters can fly above other sections */
 }
 
 .hero-bg {
@@ -157,20 +158,141 @@ h4 {
 
 .hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 9999;
+    /* High z-index for flying letters */
     max-width: 900px;
+    overflow: visible;
 }
 
 .hero h1 {
     font-size: clamp(2.5rem, 8vw, 5rem);
     margin-bottom: 1rem;
     line-height: 1.1;
+    overflow: visible;
+    /* Allow chaos letters to escape */
 }
 
 .hero p {
     font-size: clamp(1rem, 2.5vw, 1.5rem);
     color: var(--text-secondary);
     margin-bottom: 2.5rem;
+}
+
+/* ---- Chaos Word Animation ---- */
+.chaos-word {
+    display: inline-block;
+    position: relative;
+    overflow: visible;
+    /* Allow letters to fly outside */
+    z-index: 9999;
+    /* Above everything */
+}
+
+.chaos-letter {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    /* Solid color that works with transforms - no background-clip issues */
+    color: #ff6b6b;
+    text-shadow:
+        0 0 10px rgba(168, 85, 247, 0.5),
+        0 0 20px rgba(0, 212, 255, 0.3);
+    position: relative;
+    z-index: 9999;
+    /* Will-change for smooth animations */
+    will-change: transform, opacity;
+}
+
+/* When chaos is resolved */
+.chaos-word.resolved .chaos-letter {
+    transform: translate(0, 0) rotate(0deg) !important;
+    opacity: 1 !important;
+}
+
+/* ---- Chromatic Aberration Button ---- */
+.chromatic-btn {
+    position: relative;
+}
+
+.chromatic-btn::before,
+.chromatic-btn::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.chromatic-btn:hover::before {
+    animation: chromaticLeft 0.3s ease;
+    color: #ff0000;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.chromatic-btn:hover::after {
+    animation: chromaticRight 0.3s ease;
+    color: #00ffff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.chromatic-btn:hover {
+    animation: chromaticShift 0.3s ease;
+}
+
+@keyframes chromaticShift {
+
+    0%,
+    100% {
+        text-shadow: none;
+        filter: none;
+    }
+
+    25% {
+        text-shadow: -2px 0 #ff0000, 2px 0 #00ffff;
+        filter: blur(0.5px);
+    }
+
+    50% {
+        text-shadow: 2px 0 #ff0000, -2px 0 #00ffff;
+        filter: blur(0);
+    }
+
+    75% {
+        text-shadow: -1px 0 #ff0000, 1px 0 #00ffff;
+        filter: blur(0.3px);
+    }
+}
+
+@keyframes chromaticLeft {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: translateX(-3px);
+    }
+}
+
+@keyframes chromaticRight {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: translateX(3px);
+    }
 }
 
 /* ---- Hex Background Animation ---- */

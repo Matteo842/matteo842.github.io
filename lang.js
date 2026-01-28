@@ -3,6 +3,7 @@ const translations = {
   en: {
     // Hero Section
     hero_headline: "Restoring Order to Chaos.",
+    hero_headline_part1: "Restoring Order to ",
     hero_subheadline: "IT Generalist | Tool Developer | Problem Solver.",
     hero_cta: "Initialize Profile",
 
@@ -61,6 +62,7 @@ const translations = {
   de: {
     // Hero Section
     hero_headline: "Ordnung aus dem Chaos.",
+    hero_headline_part1: "Ordnung aus dem ",
     hero_subheadline: "IT-Generalist | Tool-Entwickler | Problemlöser.",
     hero_cta: "Profil Initialisieren",
 
@@ -125,7 +127,7 @@ let currentLang = localStorage.getItem('portfolio_lang') || 'en';
 function updateLanguage(lang) {
   currentLang = lang;
   localStorage.setItem('portfolio_lang', lang);
-  
+
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (translations[lang] && translations[lang][key]) {
@@ -135,7 +137,7 @@ function updateLanguage(lang) {
 
   // Update lang attribute on html element
   document.documentElement.lang = lang;
-  
+
   // Update mobile toggle indicator
   const toggleIndicator = document.querySelector('.lang-toggle-indicator');
   if (toggleIndicator) {

@@ -42,7 +42,7 @@
   </script>
 
   <!-- Custom Styles -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 
 <body>
@@ -57,9 +57,14 @@
     </div>
 
     <div class="hero-content">
-      <h1 class="gradient-text" data-i18n="hero_headline">Restoring Order to Chaos.</h1>
+      <h1>
+        <span class="gradient-text" data-i18n="hero_headline_part1">Restoring Order to </span><span class="chaos-word"
+          id="chaos-word"><span class="chaos-letter">C</span><span class="chaos-letter">h</span><span
+            class="chaos-letter">a</span><span class="chaos-letter">o</span><span
+            class="chaos-letter">s</span></span><span class="gradient-text">.</span>
+      </h1>
       <p data-i18n="hero_subheadline">IT Generalist | Tool Developer | Problem Solver.</p>
-      <a href="#projects" class="neon-btn">
+      <a href="#projects" class="neon-btn chromatic-btn" id="init-profile-btn">
         <span data-i18n="hero_cta">Initialize Profile</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

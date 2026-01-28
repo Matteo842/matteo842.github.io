@@ -275,7 +275,127 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.lang-option').forEach(opt => {
         opt.classList.toggle('active', opt.dataset.lang === currentLang);
     });
+
+    // ---- Chaos Word Handler ----
+    initChaosWord();
 });
+
+// ---- Chaos Word Effect (Outer Wilds style) ----
+const ChaosEffect = {
+    letters: [],
+    flyAwayTargets: [],
+    hasFlownAway: false,
+    originalPositions: [],
+
+    init() {
+        const chaosWord = document.getElementById('chaos-word');
+        const initBtn = document.getElementById('init-profile-btn');
+
+        if (!chaosWord || !initBtn) return;
+
+        this.letters = Array.from(chaosWord.querySelectorAll('.chaos-letter'));
+
+        // Fixed directions for each letter - moderate distances for visible explosion
+        const directions = [
+            { x: -300, y: -200, rot: -180 },  // C - top left
+            { x: 250, y: -250, rot: 120 },    // h - top right  
+            { x: -280, y: 180, rot: 90 },     // a - bottom left
+            { x: 320, y: 150, rot: -150 },    // o - right
+            { x: 80, y: 280, rot: 200 }       // s - bottom
+        ];
+
+        this.flyAwayTargets = this.letters.map((_, i) => directions[i] || directions[0]);
+
+        // Store original positions (all at 0,0 since we'll use transforms)
+        this.originalPositions = this.letters.map(() => ({ x: 0, y: 0, rot: 0 }));
+
+        // Start flying away after a short delay to ensure page is loaded
+        setTimeout(() => this.flyAway(), 500);
+
+        // Button click handler - bring letters back
+        initBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            if (this.hasFlownAway) {
+                this.returnLetters();
+            }
+        });
+    },
+
+    flyAway() {
+        // Animate each letter to fly away
+        this.letters.forEach((letter, i) => {
+            const target = this.flyAwayTargets[i];
+
+            // Animate the letter directly using transform
+            gsap.to(letter, {
+                x: target.x,
+                y: target.y,
+                rotation: target.rot,
+                opacity: 0.7,
+                duration: 5,
+                delay: i * 0.15,
+                ease: 'power1.out'
+            });
+        });
+
+        // Mark as flown away after animation completes
+        const totalDuration = 5000 + (this.letters.length * 150);
+        setTimeout(() => {
+            this.hasFlownAway = true;
+        }, totalDuration);
+    },
+
+    returnLetters() {
+        const chaosWord = document.getElementById('chaos-word');
+
+        // Animate letters back to original positions
+        this.letters.forEach((letter, i) => {
+            gsap.to(letter, {
+                x: 0,
+                y: 0,
+                rotation: 0,
+                opacity: 1,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: 'back.out(1.7)'
+            });
+        });
+
+        // Flash effect and scroll after all return
+        const returnDuration = 800 + this.letters.length * 100 + 400;
+        setTimeout(() => {
+            chaosWord.classList.add('resolved');
+
+            // Flash glow effect
+            gsap.to(chaosWord, {
+                textShadow: '0 0 40px rgba(0, 212, 255, 1), 0 0 80px rgba(168, 85, 247, 0.5)',
+                duration: 0.3,
+                yoyo: true,
+                repeat: 1,
+                onComplete: () => {
+                    gsap.to(chaosWord, { textShadow: 'none', duration: 0.5 });
+
+                    // Scroll to projects
+                    setTimeout(() => {
+                        gsap.to(window, {
+                            duration: 1.2,
+                            scrollTo: { y: '#projects', offsetY: 50 },
+                            ease: 'power2.inOut'
+                        });
+                    }, 400);
+                }
+            });
+
+            // Reset the flag so the effect can't be triggered again
+            this.hasFlownAway = false;
+        }, returnDuration);
+    }
+};
+
+function initChaosWord() {
+    ChaosEffect.init();
+}
 
 // ---- Handle Resize ----
 let resizeTimeout;
