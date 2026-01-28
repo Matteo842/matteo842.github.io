@@ -409,11 +409,23 @@ const ChaosEffect = {
     },
 
     returnLetters() {
+        const chaosWord = document.getElementById('chaos-word');
+        const initBtn = document.getElementById('init-profile-btn');
+
+        // If already resolved, just scroll immediately
+        if (chaosWord.classList.contains('resolved')) {
+            gsap.to(window, {
+                duration: 1.2,
+                scrollTo: { y: '#projects', offsetY: -20 },
+                ease: 'power2.inOut'
+            });
+            return;
+        }
+
+        // Prevent multiple simultaneous returns
         if (this.isReturning) return;
         
         this.isReturning = true;
-        const chaosWord = document.getElementById('chaos-word');
-        const initBtn = document.getElementById('init-profile-btn');
 
         // Kill all ongoing fly-away animations
         this.flyAwayAnimations.forEach(anim => {
@@ -460,7 +472,7 @@ const ChaosEffect = {
 
                     gsap.to(window, {
                         duration: 1.2,
-                        scrollTo: { y: '#projects', offsetY: 50 },
+                        scrollTo: { y: '#projects', offsetY: -20 },
                         ease: 'power2.inOut'
                     });
                 }, 800);
