@@ -866,13 +866,20 @@ function initVideoPlayer() {
         const start = this.dataset.start || 0;
         const thumb = this.querySelector('.youtube-thumb');
 
-        // Create iframe
+        if (!thumb) return;
+
+        // Create iframe with proper parameters
         const iframe = document.createElement('iframe');
-        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&start=${start}&rel=0`;
+        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&start=${start}&rel=0&modestbranding=1&enablejsapi=1`;
         iframe.title = "YouTube video player";
-        iframe.frameBorder = "0";
-        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-        iframe.allowFullscreen = true;
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.position = 'absolute';
+        iframe.style.top = '0';
+        iframe.style.left = '0';
 
         // Clear thumb content and append iframe
         thumb.innerHTML = '';
