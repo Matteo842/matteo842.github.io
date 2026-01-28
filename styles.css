@@ -869,10 +869,10 @@ footer {
 /* Backup Button Overlay */
 .backup-btn-overlay {
     position: absolute;
-    left: 35px;
-    bottom: 145px;
+    left: 37px;
+    bottom: 155px;
     width: 210px;
-    height: 58px;
+    height: 48px;
     background: transparent;
     border: 2px solid transparent;
     border-radius: 4px;
