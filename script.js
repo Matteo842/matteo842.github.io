@@ -1006,9 +1006,28 @@ const LunaDemo = {
 
     // Asset paths
     assets: {
-        main: 'assets/lunas-apartment.png',
+        // Desktop assets
+        main: 'assets/lunas-apartment.jpg',
         booking: 'assets/lunas-apartment-booking.png',
-        glitched: 'assets/lunas-apartment-gliched.png'
+        glitched: 'assets/lunas-apartment-gliched.png',
+        
+        // Mobile assets
+        mainMobile: 'assets/lunas-apartment-mobile.jpg',
+        bookingMobile: 'assets/lunas-apartment-mobile-booking.png',
+        glitchedMobile: 'assets/lunas-apartment-mobile-gliched.png' 
+    },
+
+    // Check if mobile
+    isMobile() {
+        return window.innerWidth <= 900;
+    },
+
+    // Get the right asset based on device
+    getAsset(type) {
+        if (this.isMobile()) {
+            return this.assets[type + 'Mobile'] || this.assets[type];
+        }
+        return this.assets[type];
     },
 
     init() {
@@ -1026,8 +1045,18 @@ const LunaDemo = {
             return;
         }
 
+        // Set initial screenshot based on device
+        this.elements.screenshot.src = this.getAsset('main');
+
         this.setupBookButton();
         this.setupConfirmButton();
+        
+        // Update screenshot on resize
+        window.addEventListener('resize', () => {
+            if (this.currentState === 1) {
+                this.elements.screenshot.src = this.getAsset('main');
+            }
+        });
     },
 
     setupBookButton() {
@@ -1062,7 +1091,7 @@ const LunaDemo = {
             opacity: 0,
             duration: 0.3,
             onComplete: () => {
-                screenshot.src = this.assets.booking;
+                screenshot.src = this.getAsset('booking');
                 gsap.to(screenshot, {
                     opacity: 1,
                     duration: 0.3,
@@ -1089,7 +1118,7 @@ const LunaDemo = {
 
         // During glitch, change to glitched screenshot
         setTimeout(() => {
-            screenshot.src = this.assets.glitched;
+            screenshot.src = this.getAsset('glitched');
         }, 400);
 
         // Remove glitch class after animation and show confirm button
@@ -1117,7 +1146,7 @@ const LunaDemo = {
             x: -20,
             duration: 0.3,
             onComplete: () => {
-                screenshot.src = this.assets.main;
+                screenshot.src = this.getAsset('main');
                 gsap.to(screenshot, {
                     opacity: 1,
                     x: 0,

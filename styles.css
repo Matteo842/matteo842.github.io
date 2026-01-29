@@ -1886,6 +1886,7 @@ footer {
 /* Luna Book Button Overlay */
 .luna-book-btn-overlay {
     position: absolute;
+    /* Desktop positioning - MODIFICA PER DESKTOP */
     left: 50%;
     transform: translateX(-50%);
     top: 33.8%;
@@ -2082,6 +2083,27 @@ footer {
     
     .luna-demo-section .app-screenshot {
         max-width: 100%;
+    }
+
+    /* Luna Book Button - Mobile positioning */
+    .luna-book-btn-overlay {
+        /* MODIFICA QUESTI VALORI PER MOBILE */
+        left: 50%;
+        top: 52%;  /* Posizione per screenshot mobile */
+        width: 60%;
+        height: 6%;
+    }
+
+    /* Luna Confirm Button - Mobile positioning */
+    .luna-confirm-btn-overlay {
+        /* MODIFICA QUESTI VALORI PER MOBILE */
+        left: 50%;
+        bottom: 5%;  /* Posizione dal basso */
+        width: 80%;  /* Largo quasi tutto lo schermo */
+        height: 8%;  /* Altezza maggiore per essere cliccabile */
+        /* DEBUG: Aggiungi questo per vedere il pulsante */
+        background: rgba(255, 191, 36, 0.3) !important;
+        border: 2px solid rgba(251, 191, 36, 0.8) !important;
     }
 }
 
