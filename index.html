@@ -373,6 +373,74 @@
   </section>
 
   <!-- ============================================
+       LUNA'S APARTMENT INTERACTIVE DEMO
+       ============================================ -->
+  <section class="luna-demo-section" id="luna-demo">
+    <div class="demo-wrapper">
+      <!-- Demo Header -->
+      <div class="demo-header">
+        <h2 class="demo-title">
+          <span class="text-green-400">Luna's Apartment</span>
+          <span class="demo-subtitle">Experience the booking flow</span>
+        </h2>
+        <p class="demo-hint" id="luna-demo-hint">
+          <span class="hint-icon">🏠</span>
+          <span>Click "Book Now" to start</span>
+        </p>
+      </div>
+
+      <!-- Demo Container -->
+      <div class="demo-container">
+        <!-- Luna's Apartment Screenshot -->
+        <div class="app-stage" id="luna-stage">
+          <img src="assets/lunas-apartment.png" alt="Luna's Apartment" class="app-screenshot" id="luna-screenshot"
+            draggable="false">
+          <!-- Book Now button overlay (visible in state 1) -->
+          <button class="luna-book-btn-overlay" id="luna-book-overlay">
+            <span class="book-glow"></span>
+          </button>
+        </div>
+
+        <!-- Right Panel: Description (hidden initially, shown only in final state) -->
+        <div class="right-panel" id="luna-right-panel">
+          <div class="luna-description-panel hidden" id="luna-description-panel">
+            <h3 class="luna-desc-title">Your slice of paradise</h3>
+            <p class="luna-desc-text">
+              Luna's Apartment offers a stunning view of the Sorrento Coast. Book directly from the website and save up
+              to 30% compared to other platforms.
+            </p>
+
+            <div class="luna-features">
+              <div class="luna-feature-item">
+                <span class="feature-icon">📱</span>
+                <span>Mobile Admin Panel</span>
+              </div>
+              <div class="luna-feature-item">
+                <span class="feature-icon">💰</span>
+                <span>Real-time Pricing</span>
+              </div>
+              <div class="luna-feature-item">
+                <span class="feature-icon">📅</span>
+                <span>Live Availability</span>
+              </div>
+            </div>
+
+            <a href="https://lunas-apartment.com" target="_blank" rel="noopener" class="luna-visit-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+              Visit Website
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
        ABOUT SECTION
        ============================================ -->
   <section class="section" id="about">

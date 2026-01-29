@@ -891,3 +891,153 @@ function initVideoPlayer() {
 }
 
 document.addEventListener('DOMContentLoaded', initVideoPlayer);
+
+
+// ========================================
+// LUNA'S APARTMENT INTERACTIVE DEMO
+// ========================================
+
+const LunaDemo = {
+    // State: 1 = main page (initial), 2 = booking page, 3 = glitched price, 4 = final (back to main + description)
+    currentState: 1,
+
+    // DOM Elements
+    elements: {
+        screenshot: null,
+        bookOverlay: null,
+        demoHint: null,
+        stage: null,
+        descriptionPanel: null
+    },
+
+    // Asset paths
+    assets: {
+        main: 'assets/lunas-apartment.png',
+        booking: 'assets/lunas-apartment-booking.png',
+        glitched: 'assets/lunas-apartment-gliched.png'
+    },
+
+    init() {
+        // Get DOM elements
+        this.elements.screenshot = document.getElementById('luna-screenshot');
+        this.elements.bookOverlay = document.getElementById('luna-book-overlay');
+        this.elements.demoHint = document.getElementById('luna-demo-hint');
+        this.elements.stage = document.getElementById('luna-stage');
+        this.elements.descriptionPanel = document.getElementById('luna-description-panel');
+
+        // Check if elements exist
+        if (!this.elements.screenshot || !this.elements.bookOverlay) {
+            console.warn('Luna demo elements not found');
+            return;
+        }
+
+        this.setupBookButton();
+    },
+
+    setupBookButton() {
+        const { bookOverlay } = this.elements;
+
+        bookOverlay.addEventListener('click', () => {
+            if (this.currentState === 1) {
+                this.transitionToBooking();
+            }
+        });
+    },
+
+    transitionToBooking() {
+        this.currentState = 2;
+        const { screenshot, bookOverlay, demoHint } = this.elements;
+
+        // Hide book button
+        bookOverlay.classList.add('hidden');
+
+        // Change to booking screenshot with animation
+        gsap.to(screenshot, {
+            opacity: 0,
+            duration: 0.3,
+            onComplete: () => {
+                screenshot.src = this.assets.booking;
+                gsap.to(screenshot, {
+                    opacity: 1,
+                    duration: 0.3,
+                    onComplete: () => {
+                        // After 1 second, apply glitch effect and change to glitched screenshot
+                        setTimeout(() => {
+                            this.applyGlitchEffect();
+                        }, 1000);
+                    }
+                });
+            }
+        });
+
+        // Update hint
+        demoHint.innerHTML = '<span class="hint-icon">⚡</span> <span>Watch the price...</span>';
+    },
+
+    applyGlitchEffect() {
+        this.currentState = 3;
+        const { screenshot } = this.elements;
+
+        // Add glitch animation class
+        screenshot.classList.add('glitch-active');
+
+        // During glitch, change to glitched screenshot
+        setTimeout(() => {
+            screenshot.src = this.assets.glitched;
+        }, 400);
+
+        // Remove glitch class after animation and transition to final state
+        setTimeout(() => {
+            screenshot.classList.remove('glitch-active');
+
+            // After glitch, go to final state (back to main + show description)
+            setTimeout(() => {
+                this.transitionToFinal();
+            }, 800);
+        }, 800);
+    },
+
+    transitionToFinal() {
+        this.currentState = 4;
+        const { screenshot, demoHint, descriptionPanel } = this.elements;
+
+        // Change back to main screenshot
+        gsap.to(screenshot, {
+            opacity: 0,
+            x: -20,
+            duration: 0.3,
+            onComplete: () => {
+                screenshot.src = this.assets.main;
+                gsap.to(screenshot, {
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.4,
+                    ease: 'power2.out'
+                });
+            }
+        });
+
+        // Show description panel
+        setTimeout(() => {
+            descriptionPanel.classList.remove('hidden');
+            gsap.fromTo(descriptionPanel,
+                { opacity: 0, x: 30 },
+                { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' }
+            );
+        }, 400);
+
+        // Hide hint
+        gsap.to(demoHint, {
+            opacity: 0,
+            duration: 0.3,
+            onComplete: () => {
+                demoHint.style.display = 'none';
+            }
+        });
+    }
+};
+
+// Initialize Luna demo when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    LunaDemo.init();
+});
