@@ -642,44 +642,52 @@ const SaveStateDemo = {
             }, 0);
         });
 
-        gameShortcut.addEventListener('dragend', () => {
+        gameShortcut.addEventListener('dragend', (e) => {
+            e.preventDefault();
             gameShortcut.classList.remove('dragging');
             dropZone.classList.remove('drag-over');
         });
 
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = 'move';
-            dropZone.classList.add('drag-over');
-        });
+        // Make both dropZone and screenshot accept drops
+        const dropTargets = [dropZone, screenshot];
+        
+        dropTargets.forEach(target => {
+            target.addEventListener('dragenter', (e) => {
+                if (this.currentState === 1) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.classList.add('drag-over');
+                }
+            });
 
-        dropZone.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('drag-over');
-        });
+            target.addEventListener('dragover', (e) => {
+                if (this.currentState === 1) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.dataTransfer.dropEffect = 'move';
+                }
+            });
 
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('drag-over');
+            target.addEventListener('dragleave', (e) => {
+                if (this.currentState === 1) {
+                    // Check if we're really leaving (not just entering a child)
+                    const rect = target.getBoundingClientRect();
+                    if (e.clientX < rect.left || e.clientX >= rect.right ||
+                        e.clientY < rect.top || e.clientY >= rect.bottom) {
+                        dropZone.classList.remove('drag-over');
+                    }
+                }
+            });
 
-            if (this.currentState === 1) {
-                this.showPopup();
-            }
-        });
-
-        screenshot.addEventListener('dragover', (e) => {
-            if (this.currentState === 1) {
+            target.addEventListener('drop', (e) => {
                 e.preventDefault();
-                dropZone.classList.add('drag-over');
-            }
-        });
-
-        screenshot.addEventListener('drop', (e) => {
-            if (this.currentState === 1) {
-                e.preventDefault();
+                e.stopPropagation();
                 dropZone.classList.remove('drag-over');
-                this.showPopup();
-            }
+
+                if (this.currentState === 1) {
+                    this.showPopup();
+                }
+            });
         });
 
         // Touch events for mobile
