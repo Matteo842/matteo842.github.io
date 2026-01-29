@@ -45,6 +45,7 @@ const translations = {
     android_desc: "The mobile porting of the main desktop application to the Android ecosystem. Bringing save management to handheld gaming devices.",
     android_status: "Status:",
     android_status_value: "In Development",
+    android_github: "GitHub Repo",
 
     // About Section
     about_title: "The IT Paradox",
@@ -104,6 +105,7 @@ const translations = {
     android_desc: "Die mobile Portierung der Desktop-Anwendung auf das Android-Ökosystem. Bringt Speicherverwaltung auf tragbare Gaming-Geräte.",
     android_status: "Status:",
     android_status_value: "In Entwicklung",
+    android_github: "GitHub Repo",
 
     // About Section
     about_title: "Das IT-Paradoxon",
