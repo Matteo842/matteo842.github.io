@@ -623,20 +623,18 @@ const SaveStateDemo = {
     setupDragAndDrop() {
         const { gameShortcut, dropZone, screenshot } = this.elements;
 
-        // Drag start
+        // Mouse drag events
         gameShortcut.addEventListener('dragstart', (e) => {
             gameShortcut.classList.add('dragging');
             e.dataTransfer.setData('text/plain', 'game');
             e.dataTransfer.effectAllowed = 'move';
         });
 
-        // Drag end
         gameShortcut.addEventListener('dragend', () => {
             gameShortcut.classList.remove('dragging');
             dropZone.classList.remove('drag-over');
         });
 
-        // Drop zone events
         dropZone.addEventListener('dragover', (e) => {
             e.preventDefault();
             e.dataTransfer.dropEffect = 'move';
@@ -657,7 +655,6 @@ const SaveStateDemo = {
             }
         });
 
-        // Also allow dropping on the screenshot itself
         screenshot.addEventListener('dragover', (e) => {
             if (this.currentState === 1) {
                 e.preventDefault();
@@ -672,6 +669,102 @@ const SaveStateDemo = {
                 this.showPopup();
             }
         });
+
+        // Touch events for mobile
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let isDragging = false;
+        let clone = null;
+
+        gameShortcut.addEventListener('touchstart', (e) => {
+            if (this.currentState !== 1) return;
+            
+            isDragging = true;
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+
+            // Create a visual clone for dragging
+            clone = gameShortcut.cloneNode(true);
+            clone.style.position = 'fixed';
+            clone.style.pointerEvents = 'none';
+            clone.style.zIndex = '10000';
+            clone.style.opacity = '0.8';
+            clone.style.transform = 'scale(0.9)';
+            clone.style.left = `${touchStartX - 55}px`;
+            clone.style.top = `${touchStartY - 55}px`;
+            document.body.appendChild(clone);
+
+            gameShortcut.classList.add('dragging');
+            e.preventDefault();
+        });
+
+        gameShortcut.addEventListener('touchmove', (e) => {
+            if (!isDragging || this.currentState !== 1) return;
+
+            const touch = e.touches[0];
+            const currentX = touch.clientX;
+            const currentY = touch.clientY;
+
+            // Move the clone
+            if (clone) {
+                clone.style.left = `${currentX - 55}px`;
+                clone.style.top = `${currentY - 55}px`;
+            }
+
+            // Check if over drop zone
+            const dropZoneRect = dropZone.getBoundingClientRect();
+            const isOverDropZone = (
+                currentX >= dropZoneRect.left &&
+                currentX <= dropZoneRect.right &&
+                currentY >= dropZoneRect.top &&
+                currentY <= dropZoneRect.bottom
+            );
+
+            if (isOverDropZone) {
+                dropZone.classList.add('drag-over');
+            } else {
+                dropZone.classList.remove('drag-over');
+            }
+
+            e.preventDefault();
+        });
+
+        const touchEnd = (e) => {
+            if (!isDragging || this.currentState !== 1) return;
+
+            const touch = e.changedTouches[0];
+            const endX = touch.clientX;
+            const endY = touch.clientY;
+
+            // Remove clone
+            if (clone) {
+                clone.remove();
+                clone = null;
+            }
+
+            gameShortcut.classList.remove('dragging');
+
+            // Check if dropped on drop zone
+            const dropZoneRect = dropZone.getBoundingClientRect();
+            const isOverDropZone = (
+                endX >= dropZoneRect.left &&
+                endX <= dropZoneRect.right &&
+                endY >= dropZoneRect.top &&
+                endY <= dropZoneRect.bottom
+            );
+
+            dropZone.classList.remove('drag-over');
+
+            if (isOverDropZone) {
+                this.showPopup();
+            }
+
+            isDragging = false;
+        };
+
+        gameShortcut.addEventListener('touchend', touchEnd);
+        gameShortcut.addEventListener('touchcancel', touchEnd);
     },
 
     setupPopup() {
