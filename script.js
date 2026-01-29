@@ -905,6 +905,7 @@ const LunaDemo = {
     elements: {
         screenshot: null,
         bookOverlay: null,
+        confirmOverlay: null,
         demoHint: null,
         stage: null,
         descriptionPanel: null
@@ -921,6 +922,7 @@ const LunaDemo = {
         // Get DOM elements
         this.elements.screenshot = document.getElementById('luna-screenshot');
         this.elements.bookOverlay = document.getElementById('luna-book-overlay');
+        this.elements.confirmOverlay = document.getElementById('luna-confirm-overlay');
         this.elements.demoHint = document.getElementById('luna-demo-hint');
         this.elements.stage = document.getElementById('luna-stage');
         this.elements.descriptionPanel = document.getElementById('luna-description-panel');
@@ -932,6 +934,7 @@ const LunaDemo = {
         }
 
         this.setupBookButton();
+        this.setupConfirmButton();
     },
 
     setupBookButton() {
@@ -940,6 +943,16 @@ const LunaDemo = {
         bookOverlay.addEventListener('click', () => {
             if (this.currentState === 1) {
                 this.transitionToBooking();
+            }
+        });
+    },
+
+    setupConfirmButton() {
+        const { confirmOverlay } = this.elements;
+
+        confirmOverlay.addEventListener('click', () => {
+            if (this.currentState === 3) {
+                this.transitionToFinal();
             }
         });
     },
@@ -976,7 +989,7 @@ const LunaDemo = {
 
     applyGlitchEffect() {
         this.currentState = 3;
-        const { screenshot } = this.elements;
+        const { screenshot, demoHint, confirmOverlay } = this.elements;
 
         // Add glitch animation class
         screenshot.classList.add('glitch-active');
@@ -986,20 +999,24 @@ const LunaDemo = {
             screenshot.src = this.assets.glitched;
         }, 400);
 
-        // Remove glitch class after animation and transition to final state
+        // Remove glitch class after animation and show confirm button
         setTimeout(() => {
             screenshot.classList.remove('glitch-active');
 
-            // After glitch, go to final state (back to main + show description)
-            setTimeout(() => {
-                this.transitionToFinal();
-            }, 800);
+            // Update hint
+            demoHint.innerHTML = '<span class="hint-icon">✨</span> <span>Price hacked! Click "Confirm and Proceed"</span>';
+
+            // Show confirm button
+            confirmOverlay.classList.remove('hidden');
         }, 800);
     },
 
     transitionToFinal() {
         this.currentState = 4;
-        const { screenshot, demoHint, descriptionPanel } = this.elements;
+        const { screenshot, demoHint, descriptionPanel, confirmOverlay } = this.elements;
+
+        // Hide confirm button
+        confirmOverlay.classList.add('hidden');
 
         // Change back to main screenshot
         gsap.to(screenshot, {
