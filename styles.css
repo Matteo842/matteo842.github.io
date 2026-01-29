@@ -2089,9 +2089,9 @@ footer {
     .luna-book-btn-overlay {
         /* MODIFICA QUESTI VALORI PER MOBILE */
         left: 50%;
-        top: 52%;  /* Posizione per screenshot mobile */
-        width: 60%;
-        height: 6%;
+        top: 63.3%;  /* Posizione per screenshot mobile */
+        width: 89%;
+        height: 8%;
     }
 
     /* Luna Confirm Button - Mobile positioning */
