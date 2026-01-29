@@ -1769,9 +1769,9 @@ footer {
     .backup-btn-overlay {
         /* MODIFICA QUESTI VALORI PER SCHERMI PICCOLI */
         left: 4.9%;
-        bottom: 24%;  /* ← Cambia questo valore per schermi sotto 768px */
+        bottom: 24.8%;  /* ← Cambia questo valore per schermi sotto 768px */
         width: 29%;
-        height: 9%;
+        height: 8%;
     }
 
     .demo-title {
