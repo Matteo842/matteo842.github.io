@@ -628,6 +628,18 @@ const SaveStateDemo = {
             gameShortcut.classList.add('dragging');
             e.dataTransfer.setData('text/plain', 'game');
             e.dataTransfer.effectAllowed = 'move';
+            
+            // Fix for Chrome: create a custom drag image
+            const dragImage = gameShortcut.cloneNode(true);
+            dragImage.style.position = 'absolute';
+            dragImage.style.top = '-1000px';
+            document.body.appendChild(dragImage);
+            e.dataTransfer.setDragImage(dragImage, 55, 55);
+            
+            // Clean up the temporary element after drag starts
+            setTimeout(() => {
+                document.body.removeChild(dragImage);
+            }, 0);
         });
 
         gameShortcut.addEventListener('dragend', () => {
@@ -1007,7 +1019,7 @@ const LunaDemo = {
     // Asset paths
     assets: {
         // Desktop assets
-        main: 'assets/lunas-apartment.jpg',
+        main: 'assets/lunas-apartment.png',
         booking: 'assets/lunas-apartment-booking.png',
         glitched: 'assets/lunas-apartment-gliched.png',
         

@@ -2072,6 +2072,26 @@ footer {
     }
 }
 
+/* Luna Confirm Button Overlay (appears after glitch) - DESKTOP */
+.luna-confirm-btn-overlay {
+    position: absolute;
+    left: 76.6%;
+    transform: translateX(-50%);
+    bottom: 6.8%;
+    width: 21.9%;
+    height: 4%;
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.luna-confirm-btn-overlay:not(.hidden) {
+    animation: lunaConfirmGlow 1.5s ease-in-out infinite;
+}
+
 @media (max-width: 900px) {
     .luna-demo-section .demo-container {
         flex-direction: column;
@@ -2097,11 +2117,11 @@ footer {
     /* Luna Confirm Button - Mobile positioning */
     .luna-confirm-btn-overlay {
         /* MODIFICA QUESTI VALORI PER MOBILE */
-        left: 49% !important;
-        transform: translateX(-50%) !important;
-        bottom: 3% !important;  /* Posizione dal basso */
-        width: 89% !important;  /* Largo quasi tutto lo schermo */
-        height: 4.8% !important;  /* Altezza maggiore per essere cliccabile */
+        left: 49%;
+        transform: translateX(-50%);
+        bottom: 3%;
+        width: 89%;
+        height: 4.8%;
         /* DEBUG: Rimuovi queste righe quando hai finito */
         background: rgba(255, 191, 36, 0.3) !important;
         border: 2px solid rgba(251, 191, 36, 0.8) !important;
@@ -2120,27 +2140,6 @@ footer {
     .luna-desc-text {
         font-size: 1rem;
     }
-}
-
-
-/* Luna Confirm Button Overlay (appears after glitch) */
-.luna-confirm-btn-overlay {
-    position: absolute;
-    left: 76.6%;
-    transform: translateX(-50%);
-    bottom: 6.8%;
-    width: 21.9%;
-    height: 4%;
-    background: transparent;
-    border: 2px solid transparent;
-    border-radius: 4px;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.3s ease;
-}
-
-.luna-confirm-btn-overlay:not(.hidden) {
-    animation: lunaConfirmGlow 1.5s ease-in-out infinite;
 }
 
 .confirm-glow {
