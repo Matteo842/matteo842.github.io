@@ -2097,11 +2097,12 @@ footer {
     /* Luna Confirm Button - Mobile positioning */
     .luna-confirm-btn-overlay {
         /* MODIFICA QUESTI VALORI PER MOBILE */
-        left: 50%;
-        bottom: 5%;  /* Posizione dal basso */
-        width: 80%;  /* Largo quasi tutto lo schermo */
-        height: 8%;  /* Altezza maggiore per essere cliccabile */
-        /* DEBUG: Aggiungi questo per vedere il pulsante */
+        left: 49% !important;
+        transform: translateX(-50%) !important;
+        bottom: 3% !important;  /* Posizione dal basso */
+        width: 89% !important;  /* Largo quasi tutto lo schermo */
+        height: 4.8% !important;  /* Altezza maggiore per essere cliccabile */
+        /* DEBUG: Rimuovi queste righe quando hai finito */
         background: rgba(255, 191, 36, 0.3) !important;
         border: 2px solid rgba(251, 191, 36, 0.8) !important;
     }
