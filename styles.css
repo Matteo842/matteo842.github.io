@@ -413,6 +413,8 @@ h4 {
     position: relative;
     overflow: visible;
     z-index: 11;
+    perspective: 1000px;
+    /* Helps 3D space calculation */
 }
 
 .chaos-letter {
@@ -422,7 +424,14 @@ h4 {
     color: var(--text-primary);
     position: relative;
     z-index: 11;
-    will-change: transform, opacity;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    /* Force hardware acceleration */
+    text-rendering: geometricPrecision;
+    /* Better subpixel rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Button Glitch Effect for Transition */

@@ -545,18 +545,31 @@ const ChaosEffect = {
         this.letters.forEach((letter, i) => {
             const target = this.flyAwayTargets[i];
 
-            // Create and store the animation so we can kill it later if needed
-            const anim = gsap.to(letter, {
+            // Create a timeline for continuous movement
+            const tl = gsap.timeline();
+
+            // Phase 1: Fly to the target position (Explosion)
+            tl.to(letter, {
                 x: target.x,
                 y: target.y,
                 rotation: target.rot,
                 opacity: 0.7,
-                duration: 5,
+                duration: 3, // Faster initial explosion
                 delay: i * 0.15,
-                ease: 'power1.out'
-            });
+                ease: 'power2.out',
+                force3D: true // Force GPU acceleration
+            })
+                // Phase 2: Continue drifting (approx 20% speed)
+                .to(letter, {
+                    x: target.x * 4, // Move much further
+                    y: target.y * 4,
+                    rotation: target.rot * 3,
+                    duration: 75, // Long duration for slow, continuous drift
+                    ease: 'none',
+                    force3D: true // Force GPU acceleration
+                });
 
-            this.flyAwayAnimations.push(anim);
+            this.flyAwayAnimations.push(tl);
         });
     },
 
