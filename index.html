@@ -429,10 +429,11 @@
       <div class="demo-container">
         <!-- Luna's Apartment Screenshot -->
         <div class="app-stage" id="luna-stage">
-          <img src="assets/lunas-apartment.png"
-            srcset="assets/lunas-apartment-mobile.jpg 900w, assets/lunas-apartment.png 1920w"
-            sizes="(max-width: 900px) 100vw, 800px" alt="Luna's Apartment" class="app-screenshot" id="luna-screenshot"
-            draggable="false">
+          <picture id="luna-picture">
+            <source media="(max-width: 900px)" srcset="assets/lunas-apartment-mobile.jpg">
+            <img src="assets/lunas-apartment.png" alt="Luna's Apartment" class="app-screenshot" id="luna-screenshot"
+              draggable="false">
+          </picture>
           <!-- Book Now button overlay (visible in state 1) -->
           <button class="luna-book-btn-overlay" id="luna-book-overlay">
             <span class="book-glow"></span>

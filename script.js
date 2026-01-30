@@ -1143,11 +1143,20 @@ const LunaDemo = {
             this.elements.stage.classList.add('state-main');
         }
 
-        // Cleanup srcset to prevent conflicts with JS state changes
-        this.elements.screenshot.removeAttribute('srcset');
+        // Unwrap picture tag to allow JS to control src directly
+        const picture = document.getElementById('luna-picture');
+        if (picture) {
+            // Ensure the img has the correct source set before unwrapping
+            // This prevents a double download or flash
+            this.elements.screenshot.src = this.elements.screenshot.currentSrc || this.getAsset('main');
 
-        // Set initial screenshot based on device
-        this.elements.screenshot.src = this.getAsset('main');
+            // Move img out and remove picture
+            picture.parentNode.insertBefore(this.elements.screenshot, picture);
+            picture.remove();
+        } else {
+            // Fallback for non-picture support
+            this.elements.screenshot.src = this.getAsset('main');
+        }
 
         this.setupBookButton();
         this.setupConfirmButton();
