@@ -680,9 +680,9 @@ const SaveStateDemo = {
 
     // Asset paths
     assets: {
-        empty: 'assets/savestate-empty.png',
-        oneProfile: 'assets/savestate-one-profile.png',
-        full: 'assets/SaveState.png'
+        empty: 'assets/savestate-empty.webp',
+        oneProfile: 'assets/savestate-one-profile.webp',
+        full: 'assets/SaveState.webp'
     },
 
     init() {
@@ -1118,14 +1118,14 @@ const LunaDemo = {
     // Asset paths
     assets: {
         // Desktop assets
-        main: 'assets/lunas-apartment.png',
-        booking: 'assets/lunas-apartment-booking.png',
-        glitched: 'assets/lunas-apartment-gliched.png',
+        main: 'assets/lunas-apartment.webp',
+        booking: 'assets/lunas-apartment-booking.webp',
+        glitched: 'assets/lunas-apartment-gliched.webp',
 
         // Mobile assets
-        mainMobile: 'assets/lunas-apartment-mobile.jpg',
-        bookingMobile: 'assets/lunas-apartment-mobile-booking.png',
-        glitchedMobile: 'assets/lunas-apartment-mobile-gliched.png'
+        mainMobile: 'assets/lunas-apartment-mobile.webp',
+        bookingMobile: 'assets/lunas-apartment-mobile-booking.webp',
+        glitchedMobile: 'assets/lunas-apartment-mobile-gliched.webp'
     },
 
     // Check if mobile
