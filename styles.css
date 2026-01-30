@@ -39,6 +39,8 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 body {
@@ -143,27 +145,48 @@ h4 {
     left: 0;
     width: 100%;
     z-index: 10000;
-    background: rgba(10, 10, 15, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-glass);
-    transition: all 0.3s ease;
+    /* Gradient Background: Dark on sides, transparent in center */
+    background: linear-gradient(90deg,
+            rgba(10, 10, 15, 0.95) 0%,
+            rgba(10, 10, 15, 0.85) 25%,
+            rgba(10, 10, 15, 0.1) 50%,
+            rgba(10, 10, 15, 0.85) 75%,
+            rgba(10, 10, 15, 0.95) 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s ease;
 }
 
 .sticky-nav.scrolled {
-    background: rgba(10, 10, 15, 0.9);
+    background: linear-gradient(90deg,
+            rgba(10, 10, 15, 0.98) 0%,
+            rgba(10, 10, 15, 0.9) 30%,
+            rgba(10, 10, 15, 0.4) 50%,
+            rgba(10, 10, 15, 0.9) 70%,
+            rgba(10, 10, 15, 0.98) 100%);
     border-bottom: 1px solid var(--border-neon);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    -webkit-mask-image: none;
+    mask-image: none;
 }
 
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 1.2rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: padding 0.3s ease;
 }
+
+.sticky-nav.scrolled .nav-container {
+    padding: 0.8rem 2rem;
+}
+
 
 .nav-logo {
     font-family: var(--font-mono);
@@ -177,10 +200,80 @@ h4 {
     gap: 2px;
 }
 
-.nav-links {
+/* ---- Navbar Elements ---- */
+.nav-desktop {
     display: flex;
     align-items: center;
     gap: 2rem;
+}
+
+.nav-mobile-controls {
+    display: none;
+    /* Hidden on desktop */
+    align-items: center;
+    gap: 1rem;
+}
+
+.mobile-menu-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+    color: var(--neon-blue);
+}
+
+.mobile-dropdown {
+    display: none;
+    /* Normally hidden */
+    flex-direction: column;
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-neon);
+    padding: 1rem 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    transform-origin: top;
+    animation: slideDown 0.3s ease forwards;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
+.mobile-dropdown.active {
+    display: flex;
+}
+
+.mobile-link {
+    padding: 1rem 2rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    border-left: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.mobile-link:hover {
+    background: rgba(0, 212, 255, 0.1);
+    border-left-color: var(--neon-blue);
+    color: var(--neon-blue);
 }
 
 .nav-link {
@@ -234,19 +327,26 @@ h4 {
 
 @media (max-width: 768px) {
     .nav-container {
-        padding: 0.8rem 1rem;
+        padding: 0.8rem 1rem !important;
     }
 
-    .nav-links {
-        gap: 1rem;
+    .sticky-nav.scrolled .nav-container {
+        padding: 0.8rem 1rem !important;
+    }
+
+    .nav-desktop {
+        display: none !important;
+        /* Hide desktop menu */
+    }
+
+    .nav-mobile-controls {
+        display: flex;
+        /* Show mobile controls */
     }
 
     .nav-logo {
-        font-size: 1.2rem;
-    }
-
-    .nav-link {
-        font-size: 0.85rem;
+        font-size: 1.1rem;
+        white-space: nowrap;
     }
 
     .neon-btn-sm {
@@ -279,7 +379,7 @@ h4 {
 
 .hero-content {
     position: relative;
-    z-index: 9999;
+    z-index: 10;
     max-width: 1100px;
     overflow: visible;
     width: 100%;
@@ -308,7 +408,7 @@ h4 {
     display: inline-block;
     position: relative;
     overflow: visible;
-    z-index: 9999;
+    z-index: 11;
 }
 
 .chaos-letter {
@@ -317,7 +417,7 @@ h4 {
     font-weight: 700;
     color: var(--text-primary);
     position: relative;
-    z-index: 9999;
+    z-index: 11;
     will-change: transform, opacity;
 }
 

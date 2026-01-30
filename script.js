@@ -245,6 +245,33 @@ if (stickyNav) {
     });
 }
 
+// ---- Mobile Menu Toggle ----
+const mobileBtn = document.getElementById('mobile-menu-toggle');
+const mobileDropdown = document.getElementById('mobile-dropdown');
+
+if (mobileBtn && mobileDropdown) {
+    mobileBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        mobileDropdown.classList.toggle('active');
+
+        // Toggle icon visual (optional, simpler to just rely on dropdown animation)
+    });
+
+    // Close menu when clicking a link
+    mobileDropdown.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileDropdown.classList.remove('active');
+        });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!mobileDropdown.contains(e.target) && !mobileBtn.contains(e.target)) {
+            mobileDropdown.classList.remove('active');
+        }
+    });
+}
+
 // ---- Glitch Effect Enhancement ----
 const crownJewel = document.querySelector('.crown-jewel');
 if (crownJewel) {
@@ -451,13 +478,17 @@ const ChaosEffect = {
 
         this.letters = Array.from(chaosWord.querySelectorAll('.chaos-letter'));
 
-        // Fixed directions for each letter - moderate distances for visible explosion
+        // Detect mobile to reduce explosion radius
+        const isMobile = window.innerWidth < 768;
+        const scale = isMobile ? 0.4 : 1;
+
+        // Fixed directions for each letter - scaled for mobile
         const directions = [
-            { x: -300, y: -200, rot: -180 },  // C - top left
-            { x: 250, y: -250, rot: 120 },    // h - top right  
-            { x: -280, y: 180, rot: 90 },     // a - bottom left
-            { x: 320, y: 150, rot: -150 },    // o - right
-            { x: 80, y: 280, rot: 200 }       // s - bottom
+            { x: -300 * scale, y: -200 * scale, rot: -180 },  // C - top left
+            { x: 250 * scale, y: -250 * scale, rot: 120 },    // h - top right  
+            { x: -280 * scale, y: 180 * scale, rot: 90 },     // a - bottom left
+            { x: 320 * scale, y: 150 * scale, rot: -150 },    // o - right
+            { x: 80 * scale, y: 280 * scale, rot: 200 }       // s - bottom
         ];
 
         this.flyAwayTargets = this.letters.map((_, i) => directions[i] || directions[0]);
