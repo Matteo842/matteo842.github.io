@@ -153,13 +153,31 @@ if (mobileToggle) {
 
 // ---- GSAP Scroll Animations ----
 function initScrollAnimations() {
-    // Hero content fade in
-    gsap.from('.hero-content', {
+    // Hero content animations - Optimized for LCP
+    // Title slides up but stays visible to prevent rendering delay
+    gsap.from('.hero-content h1', {
+        y: 40,
+        duration: 1.2,
+        ease: 'power3.out'
+    });
+
+    // Subtext fade in
+    gsap.from('.hero-content p', {
         opacity: 0,
-        y: 60,
+        y: 30,
         duration: 1.2,
         ease: 'power3.out',
-        delay: 0.3
+        delay: 0.2
+    });
+
+    // Button fade in - ensure ID selector for specificity
+    gsap.from('#init-profile-btn', {
+        opacity: 0,
+        y: 30,
+        duration: 1.2,
+        ease: 'power3.out',
+        delay: 0.4,
+        clearProps: "all" // Clean up inline styles to prevent conflict with CSS transitions
     });
 
     // Section fade-in animations
