@@ -1143,6 +1143,9 @@ const LunaDemo = {
             this.elements.stage.classList.add('state-main');
         }
 
+        // Cleanup srcset to prevent conflicts with JS state changes
+        this.elements.screenshot.removeAttribute('srcset');
+
         // Set initial screenshot based on device
         this.elements.screenshot.src = this.getAsset('main');
 
