@@ -250,12 +250,18 @@ const mobileBtn = document.getElementById('mobile-menu-toggle');
 const mobileDropdown = document.getElementById('mobile-dropdown');
 
 if (mobileBtn && mobileDropdown) {
-    mobileBtn.addEventListener('click', (e) => {
+    const toggleMenu = (e) => {
+        // Prevent default only for touchstart to avoid ghost clicks,
+        // but keep propagation stopped for both.
+        if (e.type === 'touchstart') {
+            e.preventDefault();
+        }
         e.stopPropagation();
         mobileDropdown.classList.toggle('active');
+    };
 
-        // Toggle icon visual (optional, simpler to just rely on dropdown animation)
-    });
+    mobileBtn.addEventListener('click', toggleMenu);
+    mobileBtn.addEventListener('touchstart', toggleMenu, { passive: false });
 
     // Close menu when clicking a link
     mobileDropdown.querySelectorAll('a').forEach(link => {
@@ -265,11 +271,14 @@ if (mobileBtn && mobileDropdown) {
     });
 
     // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
+    const closeMenu = (e) => {
         if (!mobileDropdown.contains(e.target) && !mobileBtn.contains(e.target)) {
             mobileDropdown.classList.remove('active');
         }
-    });
+    };
+
+    document.addEventListener('click', closeMenu);
+    document.addEventListener('touchstart', closeMenu, { passive: true });
 }
 
 // ---- Glitch Effect Enhancement ----

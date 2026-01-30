@@ -212,6 +212,8 @@ h4 {
     /* Hidden on desktop */
     align-items: center;
     gap: 1rem;
+    position: relative;
+    z-index: 10001;
 }
 
 .mobile-menu-btn {
@@ -219,7 +221,9 @@ h4 {
     border: none;
     color: var(--text-primary);
     cursor: pointer;
-    padding: 4px;
+    padding: 12px;
+    margin: -8px;
+    /* Offset the padding to keep visual alignment */
     transition: color 0.3s ease;
 }
 
