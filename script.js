@@ -13,7 +13,7 @@ function generateHexStream() {
 
     // Caratteri ASCII casuali - mix di simboli, lettere, numeri
     const asciiChars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    
+
     // Colori casuali per le "stelle"
     const colors = [
         '#00d4ff',  // cyan
@@ -34,24 +34,24 @@ function generateHexStream() {
     for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.className = 'ascii-star';
-        
+
         // Posizione casuale
         star.style.left = `${Math.random() * 100}%`;
         star.style.top = `${Math.random() * 100}%`;
-        
+
         // Carattere casuale
         star.textContent = asciiChars[Math.floor(Math.random() * asciiChars.length)];
-        
+
         // Colore casuale
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
         star.style.color = randomColor;
-        
+
         // Durata animazione casuale (tra 2 e 6 secondi)
         star.style.animationDuration = `${2 + Math.random() * 4}s`;
-        
+
         // Delay casuale per non farle partire tutte insieme
         star.style.animationDelay = `${Math.random() * 5}s`;
-        
+
         container.appendChild(star);
     }
 }
@@ -290,20 +290,20 @@ function generateCodeBackground() {
 function animateNumber(element, targetValue, duration = 2000, suffix = '+', prefix = '') {
     const startValue = 0;
     const startTime = performance.now();
-    
+
     function updateNumber(currentTime) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        
+
         // Easing function for smooth animation (easeOutExpo)
         const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-        
+
         const currentValue = Math.floor(startValue + (targetValue - startValue) * easeProgress);
-        
+
         // Format with thousands separator
         const formattedValue = currentValue.toLocaleString();
         element.textContent = `${prefix}${formattedValue}${suffix}`;
-        
+
         if (progress < 1) {
             requestAnimationFrame(updateNumber);
         } else {
@@ -311,7 +311,7 @@ function animateNumber(element, targetValue, duration = 2000, suffix = '+', pref
             element.textContent = `${prefix}${targetValue.toLocaleString()}${suffix}`;
         }
     }
-    
+
     requestAnimationFrame(updateNumber);
 }
 
@@ -323,22 +323,22 @@ async function fetchGitHubStats() {
     try {
         // Fetch repository data from GitHub API
         const response = await fetch('https://api.github.com/repos/Matteo842/SaveState');
-        
+
         if (!response.ok) {
             throw new Error('Failed to fetch GitHub data');
         }
-        
+
         const data = await response.json();
-        
+
         // Get stars count
         const stars = data.stargazers_count;
-        
+
         // Fetch releases for download count
         const releasesResponse = await fetch('https://api.github.com/repos/Matteo842/SaveState/releases');
-        
+
         if (releasesResponse.ok) {
             const releases = await releasesResponse.json();
-            
+
             // Calculate total downloads from all releases
             let totalDownloads = 0;
             releases.forEach(release => {
@@ -346,17 +346,17 @@ async function fetchGitHubStats() {
                     totalDownloads += asset.download_count;
                 });
             });
-            
+
             // Store data for later animation
             statsData = {
                 downloads: totalDownloads,
                 stars: stars
             };
-            
+
             // Setup ScrollTrigger to animate when card is visible
             setupStatsAnimation();
         }
-        
+
         console.log('GitHub stats fetched successfully');
     } catch (error) {
         console.warn('Could not fetch GitHub stats:', error);
@@ -366,10 +366,10 @@ async function fetchGitHubStats() {
 
 function setupStatsAnimation() {
     if (!statsData) return;
-    
+
     const saveStateCard = document.getElementById('savestate');
     if (!saveStateCard) return;
-    
+
     // Create ScrollTrigger that fires once when card enters viewport
     ScrollTrigger.create({
         trigger: saveStateCard,
@@ -378,19 +378,19 @@ function setupStatsAnimation() {
         onEnter: () => {
             if (statsAnimationTriggered) return;
             statsAnimationTriggered = true;
-            
+
             // Animate downloads count in badges
             const downloadsElements = document.querySelectorAll('[data-i18n="savestate_downloads"]');
             downloadsElements.forEach(el => {
                 animateNumber(el, statsData.downloads, 2000, '+ Downloads', '');
             });
-            
+
             // Animate stars count in badges
             const starsElements = document.querySelectorAll('[data-i18n="savestate_stars"]');
             starsElements.forEach(el => {
                 animateNumber(el, statsData.stars, 2000, '+ GitHub Stars', '');
             });
-            
+
             // Animate stats in demo section
             const statNumbers = document.querySelectorAll('.stat-number');
             if (statNumbers.length >= 2) {
@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ---- Chaos Word Handler ----
     initChaosWord();
-    
+
     // ---- Fetch GitHub Stats ----
     fetchGitHubStats();
 });
@@ -506,7 +506,7 @@ const ChaosEffect = {
 
         // Prevent multiple simultaneous returns
         if (this.isReturning) return;
-        
+
         this.isReturning = true;
 
         // Kill all ongoing fly-away animations
@@ -649,14 +649,14 @@ const SaveStateDemo = {
             gameShortcut.classList.add('dragging');
             e.dataTransfer.setData('text/plain', 'game');
             e.dataTransfer.effectAllowed = 'move';
-            
+
             // Fix for Chrome: create a custom drag image
             const dragImage = gameShortcut.cloneNode(true);
             dragImage.style.position = 'absolute';
             dragImage.style.top = '-1000px';
             document.body.appendChild(dragImage);
             e.dataTransfer.setDragImage(dragImage, 55, 55);
-            
+
             // Clean up the temporary element after drag starts
             setTimeout(() => {
                 document.body.removeChild(dragImage);
@@ -671,7 +671,7 @@ const SaveStateDemo = {
 
         // Make both dropZone and screenshot accept drops
         const dropTargets = [dropZone, screenshot];
-        
+
         dropTargets.forEach(target => {
             target.addEventListener('dragenter', (e) => {
                 if (this.currentState === 1) {
@@ -719,7 +719,7 @@ const SaveStateDemo = {
 
         gameShortcut.addEventListener('touchstart', (e) => {
             if (this.currentState !== 1) return;
-            
+
             isDragging = true;
             const touch = e.touches[0];
             touchStartX = touch.clientX;
@@ -1051,11 +1051,11 @@ const LunaDemo = {
         main: 'assets/lunas-apartment.png',
         booking: 'assets/lunas-apartment-booking.png',
         glitched: 'assets/lunas-apartment-gliched.png',
-        
+
         // Mobile assets
         mainMobile: 'assets/lunas-apartment-mobile.jpg',
         bookingMobile: 'assets/lunas-apartment-mobile-booking.png',
-        glitchedMobile: 'assets/lunas-apartment-mobile-gliched.png' 
+        glitchedMobile: 'assets/lunas-apartment-mobile-gliched.png'
     },
 
     // Check if mobile
@@ -1086,12 +1086,17 @@ const LunaDemo = {
             return;
         }
 
+        // Set initial state class
+        if (this.elements.stage) {
+            this.elements.stage.classList.add('state-main');
+        }
+
         // Set initial screenshot based on device
         this.elements.screenshot.src = this.getAsset('main');
 
         this.setupBookButton();
         this.setupConfirmButton();
-        
+
         // Update screenshot on resize
         window.addEventListener('resize', () => {
             if (this.currentState === 1) {
@@ -1122,7 +1127,7 @@ const LunaDemo = {
 
     transitionToBooking() {
         this.currentState = 2;
-        const { screenshot, bookOverlay, demoHint } = this.elements;
+        const { screenshot, bookOverlay, demoHint, stage } = this.elements;
 
         // Hide book button
         bookOverlay.classList.add('hidden');
@@ -1132,13 +1137,29 @@ const LunaDemo = {
             opacity: 0,
             duration: 0.3,
             onComplete: () => {
+                // DISABLE TRANSITIONS to prevent visible sliding while fading in
+                screenshot.style.transition = 'none';
+
+                // Update state class (move from Low to High position instantly)
+                if (stage) {
+                    stage.classList.remove('state-main');
+                    stage.classList.add('state-booking');
+                }
+
+                // Change image
                 screenshot.src = this.getAsset('booking');
+
+                // Force Reflow to apply transform instantly
+                void screenshot.offsetWidth;
+
+                // Animate Fade In
                 gsap.to(screenshot, {
                     opacity: 1,
                     duration: 0.3,
                     onComplete: () => {
-                        // After 1 second, apply glitch effect and change to glitched screenshot
+                        // After animation, after a delay, restore transitions if needed or prep for glitch
                         setTimeout(() => {
+                            screenshot.style.transition = '';
                             this.applyGlitchEffect();
                         }, 1000);
                     }
@@ -1152,7 +1173,13 @@ const LunaDemo = {
 
     applyGlitchEffect() {
         this.currentState = 3;
-        const { screenshot, demoHint, confirmOverlay } = this.elements;
+        const { screenshot, demoHint, confirmOverlay, stage } = this.elements;
+
+        // Update state class
+        if (stage) {
+            stage.classList.remove('state-booking');
+            stage.classList.add('state-glitched');
+        }
 
         // Add glitch animation class
         screenshot.classList.add('glitch-active');
@@ -1176,42 +1203,78 @@ const LunaDemo = {
 
     transitionToFinal() {
         this.currentState = 4;
-        const { screenshot, demoHint, descriptionPanel, confirmOverlay } = this.elements;
+        const { screenshot, demoHint, descriptionPanel, confirmOverlay, stage } = this.elements;
 
-        // Hide confirm button
+        // Hide confirm button & hint
         confirmOverlay.classList.add('hidden');
+        gsap.to(demoHint, { opacity: 0, duration: 0.3, onComplete: () => { demoHint.style.display = 'none'; } });
 
-        // Change back to main screenshot
+        // Fade out current screenshot
         gsap.to(screenshot, {
             opacity: 0,
-            x: -20,
             duration: 0.3,
             onComplete: () => {
+                // 1. Prepare Layout & Content
+
+                // DISABLE TRANSITIONS (Prevent slide from High to Low)
+                screenshot.style.transition = 'none';
+
+                // Update state class to main (fixes vertical position instantly)
+                if (stage) {
+                    stage.classList.remove('state-glitched');
+                    stage.classList.add('state-main');
+                }
+
+                // Change image source
                 screenshot.src = this.getAsset('main');
-                gsap.to(screenshot, {
-                    opacity: 1,
-                    x: 0,
-                    duration: 0.4,
-                    ease: 'power2.out'
-                });
-            }
-        });
 
-        // Show description panel
-        setTimeout(() => {
-            descriptionPanel.classList.remove('hidden');
-            gsap.fromTo(descriptionPanel,
-                { opacity: 0, x: 30 },
-                { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' }
-            );
-        }, 400);
+                // Clear any leftover transforms from previous GSAP animations
+                gsap.set(screenshot, { clearProps: "transform,x" });
 
-        // Hide hint
-        gsap.to(demoHint, {
-            opacity: 0,
-            duration: 0.3,
-            onComplete: () => {
-                demoHint.style.display = 'none';
+                // Force Reflow
+                void screenshot.offsetWidth;
+
+                // 2. Animate Layout (Right Panel Slide-in) & Fade In Screenshot
+
+                const rightPanel = document.querySelector('.luna-demo-section .right-panel');
+                if (rightPanel) {
+                    rightPanel.style.display = 'block';
+                    descriptionPanel.classList.remove('hidden');
+
+                    const tl = gsap.timeline();
+
+                    // Expand panel width (Push content to left)
+                    tl.fromTo(rightPanel,
+                        { width: 0, opacity: 0 },
+                        { width: 400, opacity: 1, duration: 0.8, ease: 'power2.out' }
+                    );
+
+                    // Fade in description content
+                    tl.fromTo(descriptionPanel,
+                        { opacity: 0, x: 20 },
+                        { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' },
+                        "-=0.5"
+                    );
+
+                    // Fade in screenshot in parallel
+                    // Using a small delay to ensure layout expansion has started visually
+                    gsap.to(screenshot, {
+                        opacity: 1,
+                        duration: 0.6,
+                        delay: 0.1,
+                        ease: 'power2.out',
+                        onComplete: () => {
+                            screenshot.style.transition = '';
+                        }
+                    });
+                } else {
+                    // Fallback
+                    gsap.to(screenshot, {
+                        opacity: 1,
+                        duration: 0.5,
+                        onComplete: () => { screenshot.style.transition = ''; }
+                    });
+                }
             }
         });
     }

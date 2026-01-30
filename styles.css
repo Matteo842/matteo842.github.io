@@ -475,9 +475,12 @@ h4 {
 }
 
 @keyframes starTwinkle {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 0;
     }
+
     50% {
         opacity: 0.4;
     }
@@ -1377,6 +1380,7 @@ footer {
     .drag-instruction::before {
         content: 'Touch and drag me!';
     }
+
     .drag-instruction {
         font-size: 0;
     }
@@ -1767,7 +1771,8 @@ footer {
     .backup-btn-overlay {
         /* MODIFICA QUESTI VALORI PER SCHERMI PICCOLI */
         left: 4.9%;
-        bottom: 24.8%;  /* ← Cambia questo valore per schermi sotto 768px */
+        bottom: 24.8%;
+        /* ← Cambia questo valore per schermi sotto 768px */
         width: 29%;
         height: 8%;
     }
@@ -1859,26 +1864,50 @@ footer {
 /* Luna-specific container */
 .luna-demo-section .demo-container {
     gap: 3rem;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 /* Luna-specific app stage */
 .luna-demo-section .app-stage {
-    flex: 1;
+    flex: 0 0 auto;
     display: flex;
     justify-content: center;
-    max-width: 100%;
+    align-items: flex-start;
+    max-width: 1200px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+    margin: 0 auto;
 }
 
-/* Luna-specific screenshot */
+/* Luna-specific screenshot - zoomed 10% inside container and shifted up */
+/* Main state (default) */
 .luna-demo-section .app-screenshot {
-    max-width: 1400px;
+    width: 110%;
+    max-width: none;
+    /* Use center center to ensure scaling covers all corners evenly */
+    transform: scale(1.1) translateY(5%);
+    transform-origin: center center;
+    display: block;
+    margin-top: 0;
+}
+
+/* Booking & Glitched states - Inverse position (Higher) */
+.luna-demo-section .app-stage.state-booking .app-screenshot,
+.luna-demo-section .app-stage.state-glitched .app-screenshot {
+    transform: scale(1.1) translateY(-5%);
 }
 
 /* Luna-specific right panel */
 .luna-demo-section .right-panel {
     max-width: 400px;
     flex-shrink: 0;
-    flex: 0;
+    flex: 0 0 400px;
+    display: none;
 }
 
 /* Luna Book Button Overlay */
@@ -1887,9 +1916,9 @@ footer {
     /* Desktop positioning - MODIFICA PER DESKTOP */
     left: 50%;
     transform: translateX(-50%);
-    top: 33.8%;
-    width: 7%;
-    height: 3.5%;
+    top: 37.5%;
+    width: 8.4%;
+    height: 4.2%;
     background: transparent;
     border: 2px solid transparent;
     border-radius: 4px;
@@ -2004,57 +2033,57 @@ footer {
 /* Glitch effect for price */
 @keyframes priceGlitch {
     0% {
-        transform: translate(0);
+        transform: translate(0) scale(1.1) translateY(-5%);
         filter: none;
     }
 
     10% {
-        transform: translate(-2px, 1px);
+        transform: translate(-2px, 1px) scale(1.1) translateY(-5%);
         filter: hue-rotate(90deg);
     }
 
     20% {
-        transform: translate(2px, -1px);
+        transform: translate(2px, -1px) scale(1.1) translateY(-5%);
         filter: hue-rotate(-90deg);
     }
 
     30% {
-        transform: translate(-1px, 2px);
+        transform: translate(-1px, 2px) scale(1.1) translateY(-5%);
         filter: brightness(1.5);
     }
 
     40% {
-        transform: translate(1px, -2px);
+        transform: translate(1px, -2px) scale(1.1) translateY(-5%);
         filter: contrast(2);
     }
 
     50% {
-        transform: translate(-2px, -1px);
+        transform: translate(-2px, -1px) scale(1.1) translateY(-5%);
         filter: invert(0.3);
     }
 
     60% {
-        transform: translate(2px, 1px);
+        transform: translate(2px, 1px) scale(1.1) translateY(-5%);
         filter: saturate(3);
     }
 
     70% {
-        transform: translate(-1px, -2px);
+        transform: translate(-1px, -2px) scale(1.1) translateY(-5%);
         filter: hue-rotate(180deg);
     }
 
     80% {
-        transform: translate(1px, 2px);
+        transform: translate(1px, 2px) scale(1.1) translateY(-5%);
         filter: brightness(0.5);
     }
 
     90% {
-        transform: translate(-2px, 1px);
+        transform: translate(-2px, 1px) scale(1.1) translateY(-5%);
         filter: contrast(0.5);
     }
 
     100% {
-        transform: translate(0);
+        transform: translate(0) scale(1.1) translateY(-5%);
         filter: none;
     }
 }
@@ -2065,19 +2094,23 @@ footer {
 
 /* Responsive Luna Demo */
 @media (max-width: 1200px) {
-    .luna-demo-section .app-screenshot {
+    .luna-demo-section .app-stage {
         max-width: 900px;
+    }
+
+    .luna-demo-section .app-screenshot {
+        width: 110%;
     }
 }
 
 /* Luna Confirm Button Overlay (appears after glitch) - DESKTOP */
 .luna-confirm-btn-overlay {
     position: absolute;
-    left: 76.6%;
+    left: 81.9%;
     transform: translateX(-50%);
-    bottom: 6.8%;
-    width: 21.9%;
-    height: 4%;
+    bottom: 7.4%;
+    width: 26.4%;
+    height: 4.4%;
     background: transparent;
     border: 2px solid transparent;
     border-radius: 4px;
@@ -2094,20 +2127,22 @@ footer {
     .luna-demo-section .demo-container {
         flex-direction: column;
     }
-    
+
     .luna-demo-section .app-stage {
         max-width: 100%;
     }
-    
+
     .luna-demo-section .app-screenshot {
-        max-width: 100%;
+        width: 110%;
+        transform: scale(1.1) translateY(-5%);
     }
 
     /* Luna Book Button - Mobile positioning */
     .luna-book-btn-overlay {
         /* MODIFICA QUESTI VALORI PER MOBILE */
         left: 50%;
-        top: 63.3%;  /* Posizione per screenshot mobile */
+        top: 63.3%;
+        /* Posizione per screenshot mobile */
         width: 89%;
         height: 8%;
     }
