@@ -146,36 +146,41 @@ h4 {
     padding: 2rem;
     position: relative;
     z-index: 100;
-    /* High z-index so chaos letters can fly above other sections */
+    background: #000000;
 }
 
 .hero-bg {
     position: absolute;
     inset: 0;
     z-index: 0;
-    opacity: 0.15;
+    opacity: 1;
+    overflow: hidden;
 }
 
 .hero-content {
     position: relative;
     z-index: 9999;
-    /* High z-index for flying letters */
-    max-width: 900px;
+    max-width: 1100px;
     overflow: visible;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    padding: 3rem 2rem;
+    border-radius: 20px;
 }
 
 .hero h1 {
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    margin-bottom: 1rem;
-    line-height: 1.1;
+    font-size: clamp(2.8rem, 9vw, 6rem);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
     overflow: visible;
-    /* Allow chaos letters to escape */
+    letter-spacing: -0.02em;
 }
 
 .hero p {
-    font-size: clamp(1rem, 2.5vw, 1.5rem);
-    color: var(--text-secondary);
-    margin-bottom: 2.5rem;
+    font-size: clamp(1.1rem, 3vw, 1.8rem);
+    color: #cbd5e1;
+    margin-bottom: 3rem;
+    font-weight: 500;
 }
 
 /* ---- Chaos Word Animation ---- */
@@ -183,9 +188,7 @@ h4 {
     display: inline-block;
     position: relative;
     overflow: visible;
-    /* Allow letters to fly outside */
     z-index: 9999;
-    /* Above everything */
 }
 
 .chaos-letter {
@@ -454,34 +457,29 @@ h4 {
     }
 }
 
-/* ---- Hex Background Animation ---- */
+/* ---- ASCII Stars Background Animation ---- */
 .hex-stream {
     position: absolute;
     inset: 0;
     overflow: hidden;
     font-family: var(--font-mono);
     font-size: 14px;
-    color: var(--neon-blue);
-    opacity: 0.08;
     user-select: none;
     pointer-events: none;
 }
 
-.hex-column {
+.ascii-star {
     position: absolute;
-    top: -100%;
-    animation: hexFall linear infinite;
-    white-space: pre;
-    line-height: 1.5;
+    opacity: 0;
+    animation: starTwinkle linear infinite;
 }
 
-@keyframes hexFall {
-    0% {
-        transform: translateY(0);
+@keyframes starTwinkle {
+    0%, 100% {
+        opacity: 0;
     }
-
-    100% {
-        transform: translateY(200%);
+    50% {
+        opacity: 0.4;
     }
 }
 

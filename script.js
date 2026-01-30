@@ -6,32 +6,53 @@
 // ---- Initialize GSAP ----
 gsap.registerPlugin(ScrollTrigger);
 
-// ---- Hex Stream Background Generator ----
+// ---- ASCII Stars Background Generator ----
 function generateHexStream() {
     const container = document.getElementById('hex-stream');
     if (!container) return;
 
-    const hexChars = '0123456789ABCDEF';
-    const columnCount = Math.floor(window.innerWidth / 25);
+    // Caratteri ASCII casuali - mix di simboli, lettere, numeri
+    const asciiChars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    
+    // Colori casuali per le "stelle"
+    const colors = [
+        '#00d4ff',  // cyan
+        '#a855f7',  // purple
+        '#ec4899',  // pink
+        '#22c55e',  // green
+        '#f59e0b',  // orange
+        '#3b82f6',  // blue
+        '#ef4444',  // red
+        '#10b981',  // emerald
+        '#8b5cf6',  // violet
+        '#06b6d4'   // cyan-500
+    ];
 
-    for (let i = 0; i < columnCount; i++) {
-        const column = document.createElement('div');
-        column.className = 'hex-column';
-        column.style.left = `${(i / columnCount) * 100}%`;
-        column.style.animationDuration = `${15 + Math.random() * 20}s`;
-        column.style.animationDelay = `${-Math.random() * 20}s`;
+    // Calcola quante "stelle" creare in base alla dimensione dello schermo
+    const starCount = Math.floor((window.innerWidth * window.innerHeight) / 8000);
 
-        // Generate hex content
-        let content = '';
-        for (let j = 0; j < 100; j++) {
-            let line = '';
-            for (let k = 0; k < 8; k++) {
-                line += hexChars[Math.floor(Math.random() * 16)];
-            }
-            content += line + '\n';
-        }
-        column.textContent = content;
-        container.appendChild(column);
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'ascii-star';
+        
+        // Posizione casuale
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        
+        // Carattere casuale
+        star.textContent = asciiChars[Math.floor(Math.random() * asciiChars.length)];
+        
+        // Colore casuale
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        star.style.color = randomColor;
+        
+        // Durata animazione casuale (tra 2 e 6 secondi)
+        star.style.animationDuration = `${2 + Math.random() * 4}s`;
+        
+        // Delay casuale per non farle partire tutte insieme
+        star.style.animationDelay = `${Math.random() * 5}s`;
+        
+        container.appendChild(star);
     }
 }
 
