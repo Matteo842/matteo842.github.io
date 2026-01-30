@@ -2357,8 +2357,15 @@ footer {
     }
 
     .luna-demo-section .app-screenshot {
-        width: 110%;
-        transform: scale(1.1) translateY(-5%);
+        width: 100%;
+        transform: none !important;
+        margin-top: 0;
+    }
+
+    /* Reset state transforms for mobile */
+    .luna-demo-section .app-stage.state-booking .app-screenshot,
+    .luna-demo-section .app-stage.state-glitched .app-screenshot {
+        transform: none !important;
     }
 
     /* Luna Book Button - Mobile positioning */
