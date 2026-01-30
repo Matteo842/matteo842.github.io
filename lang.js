@@ -7,6 +7,11 @@ const translations = {
     hero_subheadline: "IT Generalist | Tool Developer | Problem Solver.",
     hero_cta: "Initialize Profile",
 
+    // Navigation
+    nav_projects: "Projects",
+    nav_about: "About",
+    nav_contact: "Contact Me",
+
     // SaveState Section
     savestate_title: "SaveState",
     savestate_subtitle: "Automated Save Management Tool (Windows/Linux)",
@@ -88,6 +93,11 @@ const translations = {
     hero_headline_part1: "Ordnung aus dem ",
     hero_subheadline: "IT-Generalist | Tool-Entwickler | Problemlöser.",
     hero_cta: "Profil Initialisieren",
+
+    // Navigation
+    nav_projects: "Projekte",
+    nav_about: "Über mich",
+    nav_contact: "Kontakt",
 
     // SaveState Section
     savestate_title: "SaveState",

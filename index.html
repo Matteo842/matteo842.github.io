@@ -48,6 +48,22 @@
 <body>
 
   <!-- ============================================
+       STICKY NAVIGATION
+       ============================================ -->
+  <nav class="sticky-nav">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <span class="text-neon-blue">&lt;</span>Matteo<span class="text-neon-purple">/&gt;</span>
+      </a>
+      <div class="nav-links">
+        <a href="#projects" class="nav-link" data-i18n="nav_projects">Projects</a>
+        <a href="#about" class="nav-link" data-i18n="nav_about">About</a>
+        <a href="#about" class="nav-cta neon-btn-sm" data-i18n="nav_contact" onclick="document.querySelector('#about').scrollIntoView({behavior: 'smooth'})">Contact Me</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================
        HERO SECTION
        ============================================ -->
   <section class="hero" id="hero">

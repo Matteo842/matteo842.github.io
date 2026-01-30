@@ -233,6 +233,18 @@ document.querySelectorAll('a[href^="#"]:not(#init-profile-btn)').forEach(anchor 
     });
 });
 
+// ---- Sticky Nav Scroll Effect ----
+const stickyNav = document.querySelector('.sticky-nav');
+if (stickyNav) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            stickyNav.classList.add('scrolled');
+        } else {
+            stickyNav.classList.remove('scrolled');
+        }
+    });
+}
+
 // ---- Glitch Effect Enhancement ----
 const crownJewel = document.querySelector('.crown-jewel');
 if (crownJewel) {
