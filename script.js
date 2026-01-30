@@ -1325,11 +1325,21 @@ const LunaDemo = {
 
                     const tl = gsap.timeline();
 
-                    // Expand panel width (Push content to left)
-                    tl.fromTo(rightPanel,
-                        { width: 0, opacity: 0 },
-                        { width: 400, opacity: 1, duration: 0.8, ease: 'power2.out' }
-                    );
+                    if (this.isMobile()) {
+                        // Mobile: Just fade in, let CSS handle width
+                        // Force display block first (already done above), then animate
+                        gsap.set(rightPanel, { width: '100%' }); // Ensure width is respected
+                        tl.fromTo(rightPanel,
+                            { opacity: 0, height: 0, marginTop: 0 },
+                            { opacity: 1, height: 'auto', marginTop: 20, duration: 0.6, ease: 'power2.out' }
+                        );
+                    } else {
+                        // Desktop: Expand width to push screenshot left
+                        tl.fromTo(rightPanel,
+                            { width: 0, opacity: 0 },
+                            { width: 400, opacity: 1, duration: 0.8, ease: 'power2.out' }
+                        );
+                    }
 
                     // Fade in description content
                     tl.fromTo(descriptionPanel,
