@@ -505,6 +505,14 @@ const ChaosEffect = {
 
         this.letters = Array.from(chaosWord.querySelectorAll('.chaos-letter'));
 
+        // wrap content in inner spans for nested animation
+        this.letters.forEach(letter => {
+            if (!letter.querySelector('.chaos-inner')) {
+                const content = letter.textContent;
+                letter.innerHTML = `<span class="chaos-inner">${content}</span>`;
+            }
+        });
+
         // Detect mobile to reduce explosion radius
         const isMobile = window.innerWidth < 768;
         const scale = isMobile ? 0.4 : 1;
@@ -519,9 +527,6 @@ const ChaosEffect = {
         ];
 
         this.flyAwayTargets = this.letters.map((_, i) => directions[i] || directions[0]);
-
-        // Store original positions (all at 0,0 since we'll use transforms)
-        this.originalPositions = this.letters.map(() => ({ x: 0, y: 0, rot: 0 }));
 
         // Start flying away after a short delay to ensure page is loaded
         setTimeout(() => this.flyAway(), 500);
@@ -541,35 +546,37 @@ const ChaosEffect = {
         this.isExploded = true;
         this.flyAwayAnimations = [];
 
-        // Animate each letter to fly away and store the animation
         this.letters.forEach((letter, i) => {
+            const inner = letter.querySelector('.chaos-inner');
             const target = this.flyAwayTargets[i];
 
-            // Create a timeline for continuous movement
-            const tl = gsap.timeline();
+            if (!inner) return;
 
-            // Phase 1: Fly to the target position (Explosion)
-            tl.to(letter, {
+            // 1. Outer Animation: The Endless Drift (Linear)
+            // Moves much further to cover the entire page height/width over time
+            const driftTl = gsap.to(letter, {
+                x: target.x * 20, // Go much further (to infinity...)
+                y: target.y * 20,
+                rotation: target.rot * 10,
+                duration: 200, // Very long duration
+                ease: 'none',
+                force3D: true
+            });
+
+            // 2. Inner Animation: The Entropy (Slow, gradual separation)
+            // Slower duration and softer ease to avoid "explosion" feel
+            const explodeTl = gsap.to(inner, {
                 x: target.x,
                 y: target.y,
                 rotation: target.rot,
-                opacity: 0.7,
-                duration: 3, // Faster initial explosion
-                delay: i * 0.15,
-                ease: 'power2.out',
-                force3D: true // Force GPU acceleration
-            })
-                // Phase 2: Continue drifting (approx 20% speed)
-                .to(letter, {
-                    x: target.x * 4, // Move much further
-                    y: target.y * 4,
-                    rotation: target.rot * 3,
-                    duration: 75, // Long duration for slow, continuous drift
-                    ease: 'none',
-                    force3D: true // Force GPU acceleration
-                });
+                opacity: 0.6,
+                duration: 7, // Much slower initial movement (was 3)
+                delay: i * 0.2, // Slightly more staggered
+                ease: 'power1.out', // Softer deceleration
+                force3D: true
+            });
 
-            this.flyAwayAnimations.push(tl);
+            this.flyAwayAnimations.push(driftTl, explodeTl);
         });
     },
 
@@ -598,9 +605,12 @@ const ChaosEffect = {
         });
         this.flyAwayAnimations = [];
 
-        // Animate letters back to original positions from wherever they are
         this.letters.forEach((letter, i) => {
-            gsap.to(letter, {
+            const inner = letter.querySelector('.chaos-inner');
+            if (!inner) return;
+
+            // Animate both outer and inner back to 0
+            gsap.to([letter, inner], {
                 x: 0,
                 y: 0,
                 rotation: 0,
@@ -610,13 +620,9 @@ const ChaosEffect = {
                 ease: 'back.out(1.7)',
                 onComplete: () => {
                     // Restore styles
-                    letter.style.position = '';
-                    letter.style.left = '';
-                    letter.style.top = '';
-                    letter.style.width = '';
-                    letter.style.margin = '';
-                    letter.style.zIndex = '';
                     letter.style.transform = '';
+                    inner.style.transform = '';
+                    inner.style.opacity = '';
                 }
             });
         });
