@@ -74,11 +74,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fullscreenBtn.addEventListener('click', toggleFullscreen);
 
+    // Double click to toggle fullscreen (Desktop)
+    container.addEventListener('dblclick', toggleFullscreen);
+
     let mousedown = false;
     progressContainer.addEventListener('click', scrub);
     progressContainer.addEventListener('mousemove', (e) => mousedown && scrub(e));
     progressContainer.addEventListener('mousedown', () => mousedown = true);
     progressContainer.addEventListener('mouseup', () => mousedown = false);
+
+    // Mobile Swipe to Seek
+    let touchStartX = 0;
+    let initialVideoTime = 0;
+    let isSwiping = false;
+
+    container.addEventListener('touchstart', (e) => {
+        // Ignore if touching controls
+        if (e.target.closest('.video-controls')) return;
+
+        touchStartX = e.touches[0].clientX;
+        initialVideoTime = video.currentTime;
+        isSwiping = true;
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (e) => {
+        if (!isSwiping) return;
+
+        const touchCurrentX = e.touches[0].clientX;
+        const deltaX = touchCurrentX - touchStartX;
+
+        // Threshold to start seeking (prevent accidental touches)
+        if (Math.abs(deltaX) > 10) {
+            // Seek sensitivity: 1px = 0.5s or similar?
+            // Let's make it proportional to width but scalable.
+            // Say full width = 60 seconds seek range?
+            const containerWidth = container.offsetWidth;
+            const seekPercent = deltaX / containerWidth;
+            const seekTime = seekPercent * 60; // +/- 30 seconds max per swipe stroke usually
+
+            video.currentTime = Math.max(0, Math.min(video.duration, initialVideoTime + seekTime));
+
+            // Prevent scrolling if we are swiping horizontally?
+            // "passive: false" is needed on touchstart to preventDefault here, 
+            // but we used passive: true above. 
+            // If user wants standard behavior (prevent scroll), we should prevent default.
+            if (e.cancelable) e.preventDefault();
+        }
+    }, { passive: false });
+
+    container.addEventListener('touchend', () => {
+        isSwiping = false;
+    });
 
     // Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {
@@ -89,6 +135,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isFullscreen || container.matches(':hover') || document.activeElement === container) {
                 e.preventDefault();
                 togglePlay();
+            }
+        }
+
+        if (e.code === 'ArrowRight') {
+            if (isFullscreen || container.matches(':hover') || document.activeElement === container) {
+                e.preventDefault();
+                video.currentTime += 5;
+            }
+        }
+
+        if (e.code === 'ArrowLeft') {
+            if (isFullscreen || container.matches(':hover') || document.activeElement === container) {
+                e.preventDefault();
+                video.currentTime -= 5;
             }
         }
 
