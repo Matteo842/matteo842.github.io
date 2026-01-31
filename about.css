@@ -1,0 +1,99 @@
+/* About Page Specific Styles */
+
+.about-hero {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: #000000;
+    overflow: hidden;
+}
+
+.about-layout {
+    position: relative;
+    z-index: 10;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin: 4rem auto;
+    /* Vertical spacing */
+}
+
+.about-container {
+    width: 100%;
+    max-width: 450px;
+    /* Portrait / A4-ish ratio */
+    padding: 3rem;
+    min-height: 600px;
+    /* Ensure it feels "long" like a sheet of paper */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /* Matching .glass-card from styles.css */
+    background: rgba(15, 15, 30, 0.3);
+    /* var(--bg-glass) */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    /* var(--border-glass) */
+    border-radius: 16px;
+
+    /* Subtle shadow */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+    text-align: center;
+    color: var(--text-primary);
+}
+
+.about-text-placeholder p {
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    /* Larger, clearer text */
+    color: #e2e8f0;
+    /* Lighter text for better contrast */
+    line-height: 1.9;
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+.about-text-placeholder p:last-child {
+    margin-bottom: 0;
+}
+
+/* ASCII Rain Effect */
+.ascii-drop {
+    position: absolute;
+    top: -50px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+    will-change: transform;
+    /* Default animation */
+    animation: rainFall linear infinite;
+}
+
+@keyframes rainFall {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(120vh);
+        opacity: 0;
+    }
+}
