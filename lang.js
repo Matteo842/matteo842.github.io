@@ -25,6 +25,10 @@ const translations = {
     savestate_github: "GitHub Repo",
     savestate_website: "Website",
 
+    // Xtool Project Section
+    xtool_title: "Project X-Tool",
+    xtool_subtitle: "Private Research // Classified",
+
     // Xemu Tools Section
     xemu_badge: "CLASSIFIED",
     xemu_title: "Xemu Tools",
@@ -111,6 +115,10 @@ const translations = {
     savestate_desc: "Ein konfigurationsfreies Backup-Tool für PC-Spiele. Löst Datenkorruption und synchronisiert über Cloud (Google Drive, WebDAV, FTP).",
     savestate_github: "GitHub-Repo",
     savestate_website: "Webseite",
+
+    // Xtool Project Section
+    xtool_title: "Projekt X-Tool",
+    xtool_subtitle: "Private Forschung // Vertraulich",
 
     // Xemu Tools Section
     xemu_badge: "VERTRAULICH",

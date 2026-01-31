@@ -1,0 +1,192 @@
+/* Video Player Styles */
+.video-section {
+    position: relative;
+    padding: 8rem 2rem;
+    overflow: hidden;
+}
+
+.video-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    /* Purple tint */
+    background: #000;
+    z-index: 2;
+}
+
+.video-container:focus {
+    outline: none;
+    border-color: rgba(139, 92, 246, 0.8);
+}
+
+.video-player {
+    width: 100%;
+    display: block;
+    cursor: pointer;
+}
+
+/* Custom Controls Overlay */
+.video-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: nowrap;
+}
+
+.video-container:hover .video-controls,
+.video-container.paused .video-controls,
+.video-container:focus .video-controls {
+    opacity: 1;
+}
+
+/* Buttons */
+.control-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s, transform 0.1s;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+}
+
+.control-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.control-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+}
+
+/* Time */
+.time-display {
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* Progress Bar */
+.progress-container {
+    flex-grow: 1;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    border-radius: 5px;
+    position: relative;
+    transition: height 0.1s ease;
+}
+
+.progress-container:hover {
+    height: 8px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #8b5cf6;
+    /* Purple accent */
+    width: 0%;
+    border-radius: 5px;
+    position: relative;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.1s ease;
+}
+
+.progress-container:hover .progress-bar::after {
+    transform: translateY(-50%) scale(1);
+}
+
+/* Big Play Button Overlay */
+.play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: rgba(139, 92, 246, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+    pointer-events: none;
+    /* Let clicks pass through to video/container unless we want to click it directly */
+    z-index: 10;
+}
+
+/* Re-enable pointer events for play button so it can be clicked if needed, 
+   but our JS listens on video click mostly. 
+   Actually, if we click play overlay, we want to play. */
+.play-overlay {
+    pointer-events: auto;
+}
+
+.video-container.playing .play-overlay {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5);
+    pointer-events: none;
+}
+
+.play-overlay svg {
+    width: 40px;
+    height: 40px;
+    fill: white;
+    margin-left: 4px;
+    /* Optical centering */
+}
+
+/* Header Text */
+.xtool-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 2;
+}
+
+.xtool-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff 0%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.xtool-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    color: #94a3b8;
+    font-size: 1.1rem;
+}

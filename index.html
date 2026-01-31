@@ -45,6 +45,7 @@
 
   <!-- Custom Styles -->
   <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="video-player.css">
 </head>
 
 <body>
@@ -501,6 +502,51 @@
   </section>
 
   <!-- ============================================
+       X-TOOL PRIVATE PROJECT SHOWCASE
+       ============================================ -->
+  <section class="video-section" id="xtool-project">
+    <div class="xtool-header">
+      <h2 class="xtool-title" data-i18n="xtool_title">Xemu Tools Project</h2>
+      <p class="xtool-subtitle" data-i18n="xtool_subtitle">Private Research // Classified</p>
+    </div>
+
+    <div class="video-container" tabindex="0">
+      <video class="video-player" poster="assets/video-preview.webp">
+        <source src="assets/Xtool-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+      <!-- Big Play Overlay -->
+      <div class="play-overlay">
+        <svg viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </div>
+
+      <!-- Controls -->
+      <div class="video-controls">
+        <button class="control-btn toggle-play" title="Play/Pause">
+          <svg viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </button>
+
+        <div class="time-display">0:00 / 0:00</div>
+
+        <div class="progress-container">
+          <div class="progress-bar"></div>
+        </div>
+
+        <button class="control-btn toggle-fullscreen" title="Fullscreen">
+          <svg viewBox="0 0 24 24">
+            <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
        CERTIFICATIONS SECTION
        ============================================ -->
   <section class="section" id="certifications">
@@ -641,6 +687,8 @@
   <script src="lang.js"></script>
 
   <!-- Main Script -->
+  <!-- Video Player Script -->
+  <script src="video-player.js"></script>
   <script src="script.js"></script>
 </body>
 
