@@ -82,26 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {
-        // Only trigger if we are viewing the video or it's focused, or fullscreen
-        // Simple heuristic: if element is in viewport interaction distance
-        const rect = container.getBoundingClientRect();
-        const isVisible = (rect.top >= 0 && rect.bottom <= window.innerHeight);
         const isFullscreen = document.fullscreenElement === container;
-
-        // If user is typing in an input, ignore
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
-        // Global shortcuts usually annoying, limiting to when player is active/visible
-        // But user asked for "Youtube style". 
-        // On YouTube, K/J/L work globally? No, usually require focus. 
-        // But F usually works if page focused.
-
         if (e.code === 'Space') {
-            // Only if container focused or fullscreen?
-            // Or if user intends to play.
-            // We'll require player to have been interacted with or be in fullscreen
-            // To be safe, we'll implement standard behavior: Space = Toggle Play
-            // prevent scroll
             if (isFullscreen || container.matches(':hover') || document.activeElement === container) {
                 e.preventDefault();
                 togglePlay();
@@ -109,10 +93,69 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (e.code === 'KeyF') {
-            // "F" key for fullscreen
             if (isFullscreen || container.matches(':hover') || document.activeElement === container) {
                 toggleFullscreen();
             }
         }
     });
+
+    // XTool Title Animation
+    const title = document.querySelector('.xtool-title');
+    if (title) {
+        let originalText = title.textContent.trim() || "XEMU TOOLS PROJECT";
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
+        let revealInterval = null;
+        let idleInterval = null;
+        let isRevealed = false;
+
+        function setRandomText() {
+            if (isRevealed) return;
+            title.innerText = originalText
+                .split("")
+                .map((char) => {
+                    if (char === " ") return " ";
+                    return chars[Math.floor(Math.random() * chars.length)];
+                })
+                .join("");
+        }
+
+        // Start idle continuous scrambling
+        // Run every 80ms for a "matrix-like" flux feel
+        idleInterval = setInterval(setRandomText, 80);
+
+        function revealText() {
+            if (isRevealed) return;
+            isRevealed = true;
+            let iteration = 0;
+
+            // Stop the idle scrambling immediately
+            clearInterval(idleInterval);
+            clearInterval(revealInterval);
+
+            revealInterval = setInterval(() => {
+                title.innerText = originalText
+                    .split("")
+                    .map((char, index) => {
+                        if (index < iteration) {
+                            return originalText[index];
+                        }
+                        if (originalText[index] === " ") return " ";
+                        return chars[Math.floor(Math.random() * chars.length)];
+                    })
+                    .join("");
+
+                if (iteration >= originalText.length) {
+                    clearInterval(revealInterval);
+                    title.classList.add('revealed');
+                }
+
+                // Slower reveal: decreased from 1/3 to 1/8
+                iteration += 1 / 8;
+            }, 30);
+        }
+
+        video.addEventListener('play', revealText);
+        playBtn.addEventListener('click', revealText);
+        playOverlay.addEventListener('click', revealText);
+    }
 });

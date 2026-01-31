@@ -26,7 +26,7 @@ const translations = {
     savestate_website: "Website",
 
     // Xtool Project Section
-    xtool_title: "Project X-Tool",
+    xtool_title: "Xemu Tools Project",
     xtool_subtitle: "Private Research // Classified",
 
     // Xemu Tools Section
@@ -117,7 +117,7 @@ const translations = {
     savestate_website: "Webseite",
 
     // Xtool Project Section
-    xtool_title: "Projekt X-Tool",
+    xtool_title: "Xemu Tools Project",
     xtool_subtitle: "Private Forschung // Vertraulich",
 
     // Xemu Tools Section
