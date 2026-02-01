@@ -105,6 +105,24 @@ document.addEventListener('contextmenu', (e) => {
     showContextMenu(e.clientX, e.clientY);
 });
 
+// Block Shift + Right Click (Bypass attempt)
+document.addEventListener('mousedown', (e) => {
+    if (e.button === 2 && e.shiftKey) {
+        e.preventDefault();
+        e.stopPropagation();
+        // Since the browser might surely try to open the menu, we ensure our custom one suppresses it or handles it
+        // Note: Firefox strongly enforces Shift+RightClick bypassing scripts. 
+        // We can try to force show ours, but blocking the native one fully on Shift+RightClick is difficult in FF.
+        // However, this capture listener is the best attempt.
+        showContextMenu(e.clientX, e.clientY);
+    }
+}, { capture: true });
+
+// Disable text selection JS fallback
+document.addEventListener('selectstart', (e) => {
+    e.preventDefault();
+});
+
 // Hide menu on click outside
 document.addEventListener('click', (e) => {
     if (!contextMenu.contains(e.target)) {

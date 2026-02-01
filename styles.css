@@ -50,6 +50,8 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     min-height: 100vh;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 /* ---- Custom Scrollbar ---- */
