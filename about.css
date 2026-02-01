@@ -24,9 +24,9 @@
 
 .about-container {
     width: 100%;
-    max-width: 450px;
-    /* Portrait / A4-ish ratio */
-    padding: 3rem;
+    max-width: 550px;
+    /* Wider container */
+    padding: 2.5rem;
     min-height: 600px;
     /* Ensure it feels "long" like a sheet of paper */
     display: flex;
@@ -45,7 +45,7 @@
     /* Subtle shadow */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 
-    text-align: center;
+    text-align: left;
     color: var(--text-primary);
 }
 
