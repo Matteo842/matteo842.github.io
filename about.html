@@ -32,14 +32,14 @@
 
             <!-- Desktop Menu -->
             <div class="nav-desktop">
-                <a href="index.html#projects" class="nav-link">Projects</a>
-                <a href="#" class="nav-link" style="color: var(--neon-blue);">About</a>
-                <a href="index.html#about" class="nav-cta neon-btn-sm">Contact Me</a>
+                <a href="index.html#projects" class="nav-link" data-i18n="nav_projects">Projects</a>
+                <a href="#" class="nav-link" style="color: var(--neon-blue);" data-i18n="nav_about">About</a>
+                <a href="index.html#about" class="nav-cta neon-btn-sm" data-i18n="nav_contact">Contact Me</a>
             </div>
 
             <!-- Mobile Controls -->
             <div class="nav-mobile-controls">
-                <a href="index.html#about" class="nav-cta neon-btn-sm">Contact</a>
+                <a href="index.html#about" class="nav-cta neon-btn-sm" data-i18n="nav_contact">Contact</a>
                 <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle menu">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -53,8 +53,8 @@
 
         <!-- Mobile Dropdown -->
         <div class="mobile-dropdown" id="mobile-dropdown">
-            <a href="index.html#projects" class="mobile-link">Projects</a>
-            <a href="#" class="mobile-link" style="color: var(--neon-blue);">About</a>
+            <a href="index.html#projects" class="mobile-link" data-i18n="nav_projects">Projects</a>
+            <a href="#" class="mobile-link" style="color: var(--neon-blue);" data-i18n="nav_about">About</a>
         </div>
     </nav>
 
@@ -70,41 +70,46 @@
 
             <div class="about-container">
                 <div class="about-text-placeholder">
-                    <p class="text-white font-bold">
+                    <p class="text-white font-bold" data-i18n="about_intro_highlight">
                         Crafting systems, refining experiences, and solving the "impossible".
                     </p>
 
-                    <p>
+                    <p data-i18n="about_p1">
                         My background is in Game Design, but my skillset goes far beyond the editor. I am a Technical
                         Problem Solver and IT Generalist who bridges the gap between creative vision and functional
                         reality.
                     </p>
 
-                    <p>
+                    <p data-i18n="about_p2">
                         I don't just design rules; I build the tools that make them playable. With professional training
                         from the Digital Bros Game Academy and a deep understanding of hardware/software architecture, I
                         specialize in Player Experience (UX) and System Logic.
                     </p>
 
-                    <p class="text-white font-bold mb-2">My approach:</p>
+                    <p class="text-white font-bold mb-2" data-i18n="about_approach_title">My approach:</p>
 
                     <ul>
                         <li>
-                            <span class="text-neon-purple font-bold">Builder Mindset:</span> I leverage AI-augmented
-                            workflows and reverse engineering to create robust tools like SaveState (4,000+ users),
-                            solving real pain points for the PC gaming community.
+                            <span class="text-neon-purple font-bold" data-i18n="about_approach_1_title">Builder
+                                Mindset:</span> <span data-i18n="about_approach_1_text">I leverage AI-augmented
+                                workflows and reverse engineering to create robust tools like SaveState (4,000+ users),
+                                solving real pain points for the PC gaming community.</span>
                         </li>
                         <li>
-                            <span class="text-neon-purple font-bold">Quality Obsessed:</span> My passion for "breaking"
-                            software makes me exceptional at testing, debugging, and optimizing user flows until they
-                            are bulletproof.
+                            <span class="text-neon-purple font-bold" data-i18n="about_approach_2_title">Quality
+                                Obsessed:</span> <span data-i18n="about_approach_2_text">My passion for "breaking"
+                                software makes me exceptional at testing, debugging, and optimizing user flows until
+                                they
+                                are bulletproof.</span>
                         </li>
                     </ul>
 
                     <p>
-                        Whether it's designing a gameplay loop, securing a local network, or building a web platform, I
-                        bring the same level of obsessive detail and creative problem-solving. <span
-                            class="text-neon-blue font-bold">Currently relocating to Germany and ready to build.</span>
+                        <span data-i18n="about_outro_text">Whether it's designing a gameplay loop, securing a local
+                            network, or building a web platform, I
+                            bring the same level of obsessive detail and creative problem-solving.</span> <span
+                            class="text-neon-blue font-bold" data-i18n="about_outro_highlight">Currently relocating to
+                            Germany and ready to build.</span>
                     </p>
                 </div>
             </div>
@@ -136,6 +141,27 @@
             </div>
         </div>
     </section>
+
+    <!-- Context Menu -->
+    <div class="context-menu" id="context-menu">
+        <div class="context-menu-inner">
+            <div class="context-menu-title" data-i18n="menu_language">Language</div>
+            <div class="context-menu-item lang-option" data-lang="en">
+                <span class="flag">🇬🇧</span>
+                <span data-i18n="menu_english">English</span>
+            </div>
+            <div class="context-menu-item lang-option" data-lang="de">
+                <span class="flag">🇩🇪</span>
+                <span data-i18n="menu_german">Deutsch</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Language Toggle -->
+    <button class="mobile-lang-toggle" id="mobile-lang-toggle" aria-label="Toggle language">
+        <span class="globe-icon">🌐</span>
+        <span class="lang-toggle-indicator">EN</span>
+    </button>
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

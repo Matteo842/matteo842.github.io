@@ -78,10 +78,22 @@ const translations = {
     cert_level3_skill3: "• Progression & Economy Balancing",
     cert_level3_skill4: "• Design Psychology & Production Cycle",
 
-    // About Section
+    // About Section (Home)
     about_title: "The IT Paradox",
     about_text: "I bridge the gap between complex logic and user simplicity. While I don't fit the traditional 'programmer' box, I reverse-engineer file systems, build cloud sync tools, and solve hardware-level data problems.",
     about_contact: "Get In Touch",
+
+    // About Page (Detailed)
+    about_intro_highlight: "Crafting systems, refining experiences, and solving the \"impossible\".",
+    about_p1: "My background is in Game Design, but my skillset goes far beyond the editor. I am a Technical Problem Solver and IT Generalist who bridges the gap between creative vision and functional reality.",
+    about_p2: "I don't just design rules; I build the tools that make them playable. With professional training from the Digital Bros Game Academy and a deep understanding of hardware/software architecture, I specialize in Player Experience (UX) and System Logic.",
+    about_approach_title: "My approach:",
+    about_approach_1_title: "Builder Mindset:",
+    about_approach_1_text: " I leverage AI-augmented workflows and reverse engineering to create robust tools like SaveState (4,000+ users), solving real pain points for the PC gaming community.",
+    about_approach_2_title: "Quality Obsessed:",
+    about_approach_2_text: " My passion for \"breaking\" software makes me exceptional at testing, debugging, and optimizing user flows until they are bulletproof.",
+    about_outro_text: "Whether it's designing a gameplay loop, securing a local network, or building a web platform, I bring the same level of obsessive detail and creative problem-solving. ",
+    about_outro_highlight: "Currently relocating to Germany and ready to build.",
 
     // Context Menu
     menu_language: "Language",
@@ -169,10 +181,22 @@ const translations = {
     cert_level3_skill3: "• Progression & Economy Balancing",
     cert_level3_skill4: "• Design-Psychologie & Produktionszyklus",
 
-    // About Section
+    // About Section (Home)
     about_title: "Das IT-Paradoxon",
     about_text: "Ich überbrücke die Kluft zwischen komplexer Logik und Benutzerfreundlichkeit. Obwohl ich nicht in die traditionelle 'Programmierer'-Schublade passe, reverse-engineere ich Dateisysteme, baue Cloud-Sync-Tools und löse Datenprobleme auf Hardware-Ebene.",
     about_contact: "Kontakt Aufnehmen",
+
+    // About Page (Detailed)
+    about_intro_highlight: "Systeme entwerfen, Erfahrungen verfeinern und das \"Unmögliche\" lösen.",
+    about_p1: "Mein Hintergrund liegt im Game Design, aber meine Fähigkeiten gehen weit über den Editor hinaus. Ich bin ein technischer Problemlöser und IT-Generalist, der die Brücke zwischen kreativer Vision und funktionaler Realität schlägt.",
+    about_p2: "Ich entwerfe nicht nur Regeln; ich baue die Werkzeuge, die sie spielbar machen. Mit professioneller Ausbildung von der Digital Bros Game Academy und einem tiefen Verständnis für Hardware-/Softwarearchitektur spezialisiere ich mich auf Player Experience (UX) und Systemlogik.",
+    about_approach_title: "Mein Ansatz:",
+    about_approach_1_title: "Builder-Mindset:",
+    about_approach_1_text: " Ich nutze KI-gestützte Workflows und Reverse Engineering, um robuste Tools wie SaveState (4.000+ Nutzer) zu erstellen und echte Probleme der PC-Gaming-Community zu lösen.",
+    about_approach_2_title: "Qualitätsbesessen:",
+    about_approach_2_text: " Meine Leidenschaft dafür, Software zu \"brechen\", macht mich außergewöhnlich gut im Testen, Debuggen und Optimieren von User Flows, bis sie kugelsicher sind.",
+    about_outro_text: "Ob es um das Design eines Gameplay-Loops, die Sicherung eines lokalen Netzwerks oder den Aufbau einer Webplattform geht, ich bringe das gleiche Maß an obsessiver Detailgenauigkeit und kreativer Problemlösung ein. ",
+    about_outro_highlight: "Derzeit ziehe ich nach Deutschland um und bin bereit, Neues zu bauen.",
 
     // Context Menu
     menu_language: "Sprache",
