@@ -17,18 +17,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
     margin: 4rem auto;
     /* Vertical spacing */
 }
 
 .about-container {
     width: 100%;
-    max-width: 550px;
+    max-width: 750px;
     /* Wider container */
     padding: 2.5rem;
-    min-height: 600px;
-    /* Ensure it feels "long" like a sheet of paper */
+    min-height: auto;
+    /* Allow it to shrink if needed */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -49,15 +49,36 @@
     color: var(--text-primary);
 }
 
-.about-text-placeholder p {
-    font-family: var(--font-sans);
-    font-size: 1.25rem;
-    /* Larger, clearer text */
-    color: #e2e8f0;
-    /* Lighter text for better contrast */
-    line-height: 1.9;
-    margin-bottom: 2rem;
+.about-text-placeholder {
+    font-family: var(--font-mono);
+    /* Tech/Code look */
+    font-size: 1rem;
+    color: #cbd5e1;
+    line-height: 1.7;
     font-weight: 400;
+}
+
+.about-text-placeholder p {
+    font-size: 1rem;
+    margin-bottom: 0.7rem;
+}
+
+.about-text-placeholder strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.about-text-placeholder ul {
+    list-style: none;
+    margin-bottom: 0.7rem;
+    padding-left: 0;
+}
+
+.about-text-placeholder li {
+    margin-bottom: 0.5rem;
+    /* Less spacing between items */
+    position: relative;
+    padding-left: 0;
 }
 
 .about-text-placeholder p:last-child {
