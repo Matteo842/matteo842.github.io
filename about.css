@@ -31,7 +31,7 @@
     /* Ensure it feels "long" like a sheet of paper */
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 
     /* Matching .glass-card from styles.css */
     background: rgba(15, 15, 30, 0.15);
