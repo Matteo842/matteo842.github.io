@@ -53,7 +53,7 @@ function initAboutRain() {
             const drop = document.createElement('div');
             drop.className = 'ascii-drop';
             drop.textContent = asciiChars[Math.floor(Math.random() * asciiChars.length)];
-            drop.style.color = 'rgba(67, 194, 239, 0.4)'; // Lower opacity for back layers
+            drop.style.color = 'rgba(67, 194, 239, 0.7)'; // Increased opacity for back layers visibility
             drop.style.left = `${Math.random() * 100}%`;
 
             const size = settings.sizeRange[0] + Math.random() * (settings.sizeRange[1] - settings.sizeRange[0]);
