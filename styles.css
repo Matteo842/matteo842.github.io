@@ -68,6 +68,15 @@ body {
     border-radius: 4px;
 }
 
+/* ---- Image Protection ---- */
+img {
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
 /* ---- Typography ---- */
 h1,
 h2,

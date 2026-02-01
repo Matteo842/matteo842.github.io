@@ -133,6 +133,13 @@ document.addEventListener('click', (e) => {
 // Hide menu on scroll
 document.addEventListener('scroll', hideContextMenu);
 
+// Prevent image dragging (Extra protection)
+document.addEventListener('dragstart', (e) => {
+    if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+    }
+});
+
 // Language selection from context menu
 document.querySelectorAll('.lang-option').forEach(option => {
     option.addEventListener('click', (e) => {
