@@ -7,53 +7,52 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // ---- ASCII Stars Background Generator ----
-// ---- ASCII Rain Background Generator ----
 function generateHexStream() {
     const container = document.getElementById('hex-stream');
     if (!container) return;
 
-    container.innerHTML = ''; // Clear content on regenerate
-
-
-
-    // Caratteri ASCII casuali
+    // Caratteri ASCII casuali - mix di simboli, lettere, numeri
     const asciiChars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
-    // Colori casuali
+    // Colori casuali per le "stelle"
     const colors = [
-        '#00d4ff', '#a855f7', '#ec4899', '#22c55e', '#f59e0b',
-        '#3b82f6', '#ef4444', '#10b981', '#8b5cf6', '#06b6d4'
+        '#00d4ff',  // cyan
+        '#a855f7',  // purple
+        '#ec4899',  // pink
+        '#22c55e',  // green
+        '#f59e0b',  // orange
+        '#3b82f6',  // blue
+        '#ef4444',  // red
+        '#10b981',  // emerald
+        '#8b5cf6',  // violet
+        '#06b6d4'   // cyan-500
     ];
 
-    // High density for rain effect - Reduced by 3x
-    const dropCount = Math.floor((window.innerWidth * window.innerHeight) / 12000);
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
+    // Calcola quante "stelle" creare in base alla dimensione dello schermo
+    const starCount = Math.floor((window.innerWidth * window.innerHeight) / 8000);
 
-    for (let i = 0; i < dropCount; i++) {
-        const drop = document.createElement('div');
-        drop.className = 'ascii-drop';
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'ascii-star';
 
-        // Horizontal position (Standard 0-100%)
-        drop.style.left = `${Math.random() * 100}%`;
+        // Posizione casuale
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
 
-        drop.textContent = asciiChars[Math.floor(Math.random() * asciiChars.length)];
-        drop.style.color = colors[Math.floor(Math.random() * colors.length)];
+        // Carattere casuale
+        star.textContent = asciiChars[Math.floor(Math.random() * asciiChars.length)];
 
-        drop.style.opacity = Math.random() * 0.6 + 0.2;
-        drop.style.fontSize = `${Math.random() * 10 + 10}px`;
+        // Colore casuale
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        star.style.color = randomColor;
 
-        // Physics: Standard fall duration
-        const duration = 1 + Math.random() * 3; // 1s to 4s
-        drop.style.animationDuration = `${duration}s`;
+        // Durata animazione casuale (tra 2 e 6 secondi)
+        star.style.animationDuration = `${2 + Math.random() * 4}s`;
 
-        // Start mid-air (negative delay)
-        drop.style.animationDelay = `-${Math.random() * 5}s`;
+        // Delay casuale per non farle partire tutte insieme
+        star.style.animationDelay = `${Math.random() * 5}s`;
 
-        // Remove custom property for distance (fallback to CSS default)
-        drop.style.removeProperty('--fall-dist');
-
-        container.appendChild(drop);
+        container.appendChild(star);
     }
 }
 

@@ -2452,3 +2452,60 @@ footer {
         border-color: rgba(251, 191, 36, 1);
     }
 }
+
+/* ---- ASCII Rain Effect (Layered) ---- */
+.rain-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.layer-back {
+    z-index: 1;
+    filter: blur(2px);
+    opacity: 0.5;
+}
+
+.layer-mid {
+    z-index: 2;
+    filter: blur(1px);
+    opacity: 0.75;
+}
+
+.layer-front {
+    z-index: 3;
+    filter: none;
+    opacity: 1;
+}
+
+.ascii-drop {
+    position: absolute;
+    top: -50px;
+    font-family: var(--font-mono);
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+    will-change: transform;
+    animation: rainFall linear infinite;
+}
+
+@keyframes rainFall {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(120vh);
+        opacity: 0;
+    }
+}
