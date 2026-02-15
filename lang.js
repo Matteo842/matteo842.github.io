@@ -56,6 +56,11 @@ const translations = {
     android_status_value: "In Development",
     android_github: "GitHub Repo",
 
+    // Demo Section
+    demo_hint_drag: "Drag the game into SaveState",
+    popup_found: "Save Path Found!",
+    popup_ok: "OK",
+
     // Certifications Section
     cert_title: "Game Design Certifications",
     cert_subtitle: "Professional training from Digital Bros Game Academy",
@@ -102,6 +107,10 @@ const translations = {
 
     // Footer
     footer_built: "Built with precision.",
+    footer_tagline: "IT Generalist & Tool Developer. Restoring order to chaos, one system at a time.",
+    footer_nav_title: "Navigation",
+    footer_projects_title: "Projects",
+    footer_back_top: "Back to top",
   },
   de: {
     // Hero Section
@@ -159,6 +168,11 @@ const translations = {
     android_status_value: "In Entwicklung",
     android_github: "GitHub Repo",
 
+    // Demo Section
+    demo_hint_drag: "Ziehe das Spiel in SaveState",
+    popup_found: "Speicherpfad gefunden!",
+    popup_ok: "OK",
+
     // Certifications Section
     cert_title: "Game Design Zertifizierungen",
     cert_subtitle: "Professionelle Ausbildung von der Digital Bros Game Academy",
@@ -205,6 +219,10 @@ const translations = {
 
     // Footer
     footer_built: "Mit Präzision gebaut.",
+    footer_tagline: "IT-Generalist & Tool-Entwickler. Ordnung aus dem Chaos, ein System nach dem anderen.",
+    footer_nav_title: "Navigation",
+    footer_projects_title: "Projekte",
+    footer_back_top: "Nach oben",
   }
 };
 
