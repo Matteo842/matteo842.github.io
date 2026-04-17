@@ -1,0 +1,855 @@
+/* ========================================================================
+   Portfolio Taste Refinement Layer (v2)
+   Applies the "taste-skill" principles over styles.css:
+   - Font: Geist (Inter banned)
+   - Palette: off-black surfaces + 1 desaturated accent (warm amber)
+   - No neon glows, no gradient text, tinted inset shadows
+   - Asymmetric hero split-screen
+   - Bento-style project grid
+   - Spotlight border + tactile press micro-interactions
+   Scoped under `body.theme-v2` so about.html stays untouched.
+   ======================================================================== */
+
+body.theme-v2 {
+    /* Surfaces (off-black, NOT pure #000) */
+    --v2-surface-0: #0a0a0b;
+    --v2-surface-1: #101012;
+    --v2-surface-2: #17171a;
+    --v2-surface-3: #1f1f23;
+
+    /* Text */
+    --v2-text-primary: #fafafa;
+    --v2-text-secondary: #a1a1aa;
+    --v2-text-muted: #71717a;
+
+    /* Borders */
+    --v2-border-subtle: rgba(255, 255, 255, 0.06);
+    --v2-border-emphasis: rgba(255, 255, 255, 0.14);
+    --v2-border-hover: rgba(232, 168, 74, 0.35);
+
+    /* Single accent: warm amber (hsl 38 78% 60%), desaturated vs neon */
+    --v2-accent: #e8a84a;
+    --v2-accent-strong: #f0b65a;
+    --v2-accent-soft: rgba(232, 168, 74, 0.14);
+    --v2-accent-ring: rgba(232, 168, 74, 0.35);
+
+    /* Semantic (muted, used for third-party brand callouts) */
+    --v2-ok: #86efac;
+    --v2-info: #93c5fd;
+    --v2-danger: #fca5a5;
+    --v2-warn: #fcd34d;
+
+    /* Shadows: diffused + inset highlight (no outer glow) */
+    --v2-shadow-card:
+        0 1px 0 rgba(255, 255, 255, 0.04) inset,
+        0 20px 40px -20px rgba(0, 0, 0, 0.6);
+    --v2-shadow-elev:
+        0 1px 0 rgba(255, 255, 255, 0.06) inset,
+        0 30px 60px -24px rgba(0, 0, 0, 0.75);
+
+    /* Fonts */
+    --v2-font-display: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
+    --v2-font-body: 'Geist', system-ui, -apple-system, sans-serif;
+    --v2-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    /* Replace legacy variables (scoped, so about.html still uses originals) */
+    --bg-primary: var(--v2-surface-0);
+    --bg-secondary: var(--v2-surface-1);
+    --bg-card: rgba(23, 23, 26, 0.6);
+    --bg-glass: rgba(16, 16, 18, 0.7);
+    --text-primary: var(--v2-text-primary);
+    --text-secondary: var(--v2-text-secondary);
+    --text-muted: var(--v2-text-muted);
+    --border-glass: var(--v2-border-subtle);
+    --border-neon: var(--v2-border-hover);
+    --font-sans: var(--v2-font-body);
+    --glow-blue: none;
+    --glow-purple: none;
+}
+
+/* ---- Typography: kill Inter, welcome Geist ---- */
+body.theme-v2 {
+    font-family: var(--v2-font-body);
+    font-feature-settings: 'ss01', 'cv11', 'cv02';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body.theme-v2 h1,
+body.theme-v2 h2,
+body.theme-v2 h3,
+body.theme-v2 h4 {
+    font-family: var(--v2-font-display);
+    letter-spacing: -0.025em;
+    font-weight: 600;
+}
+
+/* Display headlines — tighter, quieter, not screaming */
+body.theme-v2 .hero h1 {
+    font-family: var(--v2-font-display);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    font-size: clamp(2.6rem, 7.5vw, 5.2rem);
+}
+
+/* Kill gradient text — solid instead */
+body.theme-v2 .gradient-text {
+    background: none;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: currentColor;
+    background-clip: initial;
+    color: var(--v2-text-primary);
+}
+
+/* For project-title accents that were gradient, use solid accent */
+body.theme-v2 .hero h1 .gradient-text {
+    color: var(--v2-text-primary);
+}
+
+body.theme-v2 #savestate h2 .text-savestate-red {
+    color: var(--v2-danger);
+    font-weight: 600;
+}
+
+body.theme-v2 #android h3 .gradient-text,
+body.theme-v2 #certifications h3.gradient-text,
+body.theme-v2 .section-title.gradient-text {
+    color: var(--v2-text-primary);
+}
+
+body.theme-v2 .section-title {
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    position: relative;
+}
+
+body.theme-v2 .section-title::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--v2-accent);
+    margin: 0 auto 1.25rem;
+}
+
+/* Body paragraphs: readable measure, calm color */
+body.theme-v2 p {
+    color: var(--v2-text-secondary);
+    max-width: 65ch;
+}
+
+body.theme-v2 .hero p {
+    color: var(--v2-text-secondary);
+    font-weight: 400;
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    letter-spacing: -0.005em;
+}
+
+/* ---- Navigation: remove neon logo split, use mono accent ---- */
+body.theme-v2 .sticky-nav {
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    background: rgba(10, 10, 11, 0.72);
+    border-bottom: 1px solid var(--v2-border-subtle);
+}
+
+body.theme-v2 .nav-logo {
+    font-family: var(--v2-font-mono);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--v2-text-primary);
+    font-size: 0.95rem;
+}
+
+body.theme-v2 .nav-logo .text-neon-blue,
+body.theme-v2 .nav-logo .text-neon-purple {
+    color: var(--v2-text-muted);
+}
+
+body.theme-v2 .nav-link {
+    color: var(--v2-text-secondary);
+    font-family: var(--v2-font-body);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+body.theme-v2 .nav-link:hover {
+    color: var(--v2-text-primary);
+}
+
+body.theme-v2 .nav-link::after {
+    background: var(--v2-accent);
+}
+
+/* ---- Buttons: amber accent, no glow, tactile press ---- */
+body.theme-v2 .neon-btn,
+body.theme-v2 .neon-btn-sm {
+    font-family: var(--v2-font-mono);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    border: 1px solid var(--v2-border-emphasis);
+    color: var(--v2-text-primary);
+    background: var(--v2-surface-2);
+    border-radius: 10px;
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.05) inset,
+        0 1px 2px rgba(0, 0, 0, 0.4);
+    transition: transform .18s cubic-bezier(.16,1,.3,1),
+                border-color .18s ease,
+                background .18s ease,
+                color .18s ease;
+}
+
+body.theme-v2 .neon-btn::before,
+body.theme-v2 .neon-btn-sm::before {
+    display: none;
+}
+
+body.theme-v2 .neon-btn:hover,
+body.theme-v2 .neon-btn-sm:hover {
+    color: var(--v2-accent);
+    border-color: var(--v2-border-hover);
+    background: var(--v2-surface-3);
+    box-shadow:
+        0 1px 0 rgba(232, 168, 74, 0.1) inset,
+        0 6px 16px -6px rgba(232, 168, 74, 0.15);
+    transform: translateY(-1px);
+}
+
+body.theme-v2 .neon-btn:active,
+body.theme-v2 .neon-btn-sm:active {
+    transform: translateY(0) scale(0.985);
+}
+
+/* Primary (accent-filled) CTA variant */
+body.theme-v2 .neon-btn.chromatic-btn,
+body.theme-v2 a.nav-cta.neon-btn-sm {
+    background: var(--v2-accent);
+    color: #1a0f00;
+    border-color: var(--v2-accent);
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.25) inset,
+        0 10px 30px -14px rgba(232, 168, 74, 0.45);
+}
+
+body.theme-v2 .neon-btn.chromatic-btn:hover,
+body.theme-v2 a.nav-cta.neon-btn-sm:hover {
+    background: var(--v2-accent-strong);
+    color: #1a0f00;
+    border-color: var(--v2-accent-strong);
+    transform: translateY(-1px);
+}
+
+/* Disable the legacy red/cyan chromatic aberration glitch on hover */
+body.theme-v2 .chromatic-btn:hover::before,
+body.theme-v2 .chromatic-btn:hover::after {
+    display: none;
+    animation: none;
+}
+
+body.theme-v2 .chromatic-btn:hover {
+    animation: none;
+    filter: none;
+    text-shadow: none;
+}
+
+/* ---- Glass cards: quiet border + spotlight on hover (no glow) ---- */
+body.theme-v2 .glass-card {
+    background: var(--v2-surface-1);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 1px solid var(--v2-border-subtle);
+    border-radius: 20px;
+    box-shadow: var(--v2-shadow-card);
+    position: relative;
+    transition: transform .35s cubic-bezier(.16,1,.3,1),
+                border-color .35s ease;
+}
+
+body.theme-v2 .glass-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(
+        400px circle at var(--mx, 50%) var(--my, 50%),
+        rgba(232, 168, 74, 0.45),
+        transparent 40%
+    );
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    opacity: 0;
+    transition: opacity .35s ease;
+    pointer-events: none;
+}
+
+body.theme-v2 .glass-card:hover {
+    border-color: var(--v2-border-emphasis);
+    transform: translateY(-2px);
+    box-shadow: var(--v2-shadow-elev);
+}
+
+body.theme-v2 .glass-card:hover::before {
+    opacity: 1;
+}
+
+/* Crown jewel gets the accent highlight */
+body.theme-v2 .crown-jewel {
+    background:
+        linear-gradient(135deg, rgba(232, 168, 74, 0.02), transparent 45%),
+        var(--v2-surface-1);
+}
+
+body.theme-v2 .crown-jewel::before {
+    display: none;
+}
+
+/* Classified card: monochrome, no glow */
+body.theme-v2 .classified-card {
+    background:
+        linear-gradient(180deg, var(--v2-surface-2) 0%, var(--v2-surface-1) 100%);
+}
+
+body.theme-v2 .classified-card::before {
+    display: none;
+}
+
+body.theme-v2 .classified-badge {
+    background: var(--v2-surface-3);
+    border: 1px solid var(--v2-border-emphasis);
+    color: var(--v2-text-secondary);
+    font-family: var(--v2-font-mono);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+}
+
+body.theme-v2 .bright-card {
+    background: var(--v2-surface-1);
+}
+
+body.theme-v2 .bright-card:hover {
+    border-color: rgba(134, 239, 172, 0.3);
+}
+
+/* Recolor Luna's accent span (was green neon) to muted ok */
+body.theme-v2 #luna h3.text-green-400,
+body.theme-v2 .luna-demo-section .text-green-400 {
+    color: var(--v2-ok);
+}
+
+body.theme-v2 #luna .bg-green-900\/20 {
+    background: rgba(134, 239, 172, 0.06);
+}
+
+body.theme-v2 #luna .border-green-500\/30 {
+    border-color: rgba(134, 239, 172, 0.2);
+}
+
+body.theme-v2 #luna .text-green-300 {
+    color: var(--v2-ok);
+}
+
+/* Xemu card: quiet purple → quiet accent */
+body.theme-v2 #xemu .text-purple-400 {
+    color: var(--v2-text-primary);
+    font-weight: 600;
+}
+
+body.theme-v2 #xemu .bg-purple-900\/20 {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+body.theme-v2 #xemu .border-purple-500\/30 {
+    border-color: var(--v2-border-subtle);
+}
+
+body.theme-v2 #xemu .text-purple-300 {
+    color: var(--v2-text-secondary);
+}
+
+/* Android card: neutral base, tint the phone icon */
+body.theme-v2 #android svg.text-green-400 {
+    color: var(--v2-accent);
+    opacity: 0.25;
+}
+
+/* ---- Status / stat badges: unify to surface-3 + accent ---- */
+body.theme-v2 .stat-badge {
+    background: var(--v2-surface-2);
+    border: 1px solid var(--v2-border-subtle);
+    color: var(--v2-text-secondary);
+    font-family: var(--v2-font-mono);
+}
+
+body.theme-v2 .stat-badge svg {
+    color: var(--v2-accent);
+}
+
+body.theme-v2 .status-badge {
+    background: var(--v2-surface-3);
+    border-color: var(--v2-border-emphasis);
+    color: var(--v2-text-secondary);
+}
+
+body.theme-v2 .status-badge.in-dev {
+    background: rgba(252, 211, 77, 0.08);
+    border-color: rgba(252, 211, 77, 0.3);
+    color: var(--v2-warn);
+}
+
+/* Link neon underline → amber underline */
+body.theme-v2 .link-neon {
+    color: var(--v2-text-primary);
+    border-bottom: 1px dotted var(--v2-border-emphasis);
+}
+
+body.theme-v2 .link-neon:hover {
+    color: var(--v2-accent);
+    border-bottom-color: var(--v2-accent);
+}
+
+body.theme-v2 .link-neon::after {
+    display: none;
+}
+
+body.theme-v2 .text-neon-blue {
+    color: var(--v2-info);
+}
+
+body.theme-v2 .text-neon-purple {
+    color: var(--v2-text-secondary);
+}
+
+body.theme-v2 .text-neon-green {
+    color: var(--v2-ok);
+}
+
+/* ---- HERO: asymmetric split-screen ----
+   Keep the outer flex-center from the original .hero so vertical centering works.
+   Only convert .hero-content from a single block to a 2-col grid. */
+body.theme-v2 .hero {
+    min-height: 100dvh; /* iOS Safari fix */
+    text-align: left;
+    padding: 6rem 1.5rem 3rem;
+    background:
+        radial-gradient(1200px 600px at 100% 0%, rgba(232, 168, 74, 0.06), transparent 55%),
+        var(--v2-surface-0);
+}
+
+body.theme-v2 .hero-bg {
+    opacity: 0.35;
+}
+
+body.theme-v2 .hero-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: center;
+    gap: 3rem;
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    text-align: left;
+    overflow: visible;
+}
+
+body.theme-v2 .hero-copy {
+    max-width: 40rem;
+    min-width: 0;
+}
+
+body.theme-v2 .hero h1 {
+    margin-bottom: 1.25rem;
+    text-align: left;
+}
+
+body.theme-v2 .hero p {
+    text-align: left;
+    margin-left: 0;
+    margin-bottom: 2rem;
+    max-width: 32rem;
+}
+
+/* Hero meta row — small tags above headline */
+body.theme-v2 .hero-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    margin-bottom: 1.75rem;
+    background: var(--v2-surface-2);
+    border: 1px solid var(--v2-border-subtle);
+    border-radius: 999px;
+    font-family: var(--v2-font-mono);
+    font-size: 0.78rem;
+    color: var(--v2-text-secondary);
+    letter-spacing: -0.005em;
+}
+
+body.theme-v2 .hero-meta .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--v2-accent);
+    box-shadow: 0 0 0 3px var(--v2-accent-soft);
+    animation: v2-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes v2-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+}
+
+/* Right-side visual: terminal card that auto-sizes to its content */
+body.theme-v2 .hero-visual {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    justify-self: end;
+    align-self: center;
+    border: 1px solid var(--v2-border-subtle);
+    border-radius: 16px;
+    background:
+        linear-gradient(180deg, rgba(232, 168, 74, 0.04), transparent 40%),
+        var(--v2-surface-1);
+    box-shadow: var(--v2-shadow-elev);
+    overflow: hidden;
+    padding: 2.75rem 1.75rem 1.75rem;
+    font-family: var(--v2-font-mono);
+    font-size: 0.84rem;
+    color: var(--v2-text-secondary);
+    line-height: 1.75;
+}
+
+/* Traffic-light dots (macOS terminal style) */
+body.theme-v2 .hero-visual::before {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #3f3f46;
+    box-shadow: 18px 0 #3f3f46, 36px 0 #3f3f46;
+}
+
+body.theme-v2 .hero-visual .hv-path {
+    display: block;
+    margin: 0 0 1.1rem;
+    color: var(--v2-text-muted);
+    font-size: 0.72rem;
+}
+
+body.theme-v2 .hero-visual .hv-line {
+    display: block;
+}
+
+body.theme-v2 .hero-visual .hv-line .k {
+    color: var(--v2-accent);
+}
+
+body.theme-v2 .hero-visual .hv-line .s {
+    color: var(--v2-ok);
+}
+
+body.theme-v2 .hero-visual .hv-line .c {
+    color: var(--v2-text-muted);
+}
+
+body.theme-v2 .hero-visual .hv-caret {
+    display: inline-block;
+    width: 7px;
+    height: 14px;
+    background: var(--v2-accent);
+    margin-left: 3px;
+    animation: v2-caret 1s steps(2, start) infinite;
+    vertical-align: text-bottom;
+}
+
+@keyframes v2-caret {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* Hero mobile collapse */
+@media (max-width: 900px) {
+    body.theme-v2 .hero {
+        padding: 5rem 1.25rem 2.5rem;
+    }
+
+    body.theme-v2 .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    body.theme-v2 .hero-visual {
+        width: 100%;
+        justify-self: stretch;
+        max-width: none;
+        aspect-ratio: 1.1 / 1;
+    }
+}
+
+/* ---- BENTO: asymmetric project grid ---- */
+body.theme-v2 #projects {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+}
+
+/* Kill full-width crown padding defaults */
+body.theme-v2 .crown-jewel.mb-4 {
+    margin-bottom: 1.25rem;
+}
+
+/* New bento grid: 12-col asymmetric layout */
+body.theme-v2 .projects-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(280px, auto);
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+}
+
+body.theme-v2 .projects-grid-2 > #xemu {
+    grid-column: span 7;
+}
+
+body.theme-v2 .projects-grid-2 > #luna {
+    grid-column: span 5;
+}
+
+body.theme-v2 .projects-grid-2 > #android,
+body.theme-v2 .projects-grid-2 > #easyfps {
+    grid-column: span 6;
+}
+
+/* Android icon: keep it decorative/centered inside the card */
+body.theme-v2 #android .flex-grow {
+    opacity: 0.25;
+    margin: 0.5rem 0;
+}
+
+/* EasyFPS accent: rust-themed tech badge inside the card */
+body.theme-v2 #easyfps .tech-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: var(--v2-surface-3);
+    border: 1px solid var(--v2-border-subtle);
+    border-radius: 999px;
+    font-family: var(--v2-font-mono);
+    font-size: 0.72rem;
+    color: var(--v2-text-secondary);
+    letter-spacing: -0.005em;
+}
+
+body.theme-v2 #easyfps .tech-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--v2-accent);
+}
+
+@media (max-width: 900px) {
+    body.theme-v2 .projects-grid-2 {
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+    }
+
+    body.theme-v2 .projects-grid-2 > #xemu,
+    body.theme-v2 .projects-grid-2 > #luna,
+    body.theme-v2 .projects-grid-2 > #android,
+    body.theme-v2 .projects-grid-2 > #easyfps {
+        grid-column: span 1;
+    }
+}
+
+/* ---- Certifications: quieter cards, Bento 3-row staggered ---- */
+body.theme-v2 .cert-grid {
+    gap: 1.25rem;
+}
+
+body.theme-v2 .cert-image-wrapper {
+    border-radius: 14px;
+    border-color: var(--v2-border-subtle);
+}
+
+body.theme-v2 .cert-image-wrapper::after {
+    background: linear-gradient(135deg, rgba(232, 168, 74, 0.12), transparent 70%);
+}
+
+body.theme-v2 .cert-image-wrapper:hover {
+    border-color: var(--v2-border-hover);
+    box-shadow: var(--v2-shadow-elev);
+}
+
+/* ---- About / Skills / Contact ---- */
+body.theme-v2 #about .section-title {
+    color: var(--v2-text-primary);
+}
+
+body.theme-v2 .about-text {
+    color: var(--v2-text-secondary);
+    max-width: 52ch;
+}
+
+body.theme-v2 .skill-tag {
+    background: var(--v2-surface-2);
+    border: 1px solid var(--v2-border-subtle);
+    color: var(--v2-text-secondary);
+    border-radius: 8px;
+    font-family: var(--v2-font-mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    transition: transform .18s ease, border-color .18s ease, color .18s ease;
+}
+
+body.theme-v2 .skill-tag:hover {
+    color: var(--v2-accent);
+    border-color: var(--v2-border-hover);
+    transform: translateY(-1px);
+    box-shadow: none;
+}
+
+body.theme-v2 .contact-link {
+    background: var(--v2-surface-2);
+    border: 1px solid var(--v2-border-subtle);
+    color: var(--v2-text-primary);
+    border-radius: 10px;
+    font-family: var(--v2-font-mono);
+    font-weight: 500;
+    transition: all .18s ease;
+}
+
+body.theme-v2 .contact-link:hover {
+    color: var(--v2-accent);
+    border-color: var(--v2-border-hover);
+    background: var(--v2-surface-3);
+    transform: translateY(-1px);
+    box-shadow: none;
+}
+
+/* ---- Footer cleanup ---- */
+body.theme-v2 footer {
+    background: var(--v2-surface-0);
+    border-top: 1px solid var(--v2-border-subtle);
+}
+
+body.theme-v2 .footer-glow-line {
+    background: linear-gradient(90deg, transparent, var(--v2-accent), transparent);
+    opacity: 0.35;
+    height: 1px;
+}
+
+body.theme-v2 .footer-brand-name {
+    font-family: var(--v2-font-mono);
+    font-weight: 500;
+}
+
+body.theme-v2 .footer-brand-name .text-neon-blue,
+body.theme-v2 .footer-brand-name .text-neon-purple {
+    color: var(--v2-text-muted);
+}
+
+body.theme-v2 .footer-nav-links a:hover {
+    color: var(--v2-accent);
+}
+
+body.theme-v2 .footer-social a:hover {
+    color: var(--v2-accent);
+    border-color: var(--v2-border-hover);
+}
+
+body.theme-v2 .back-to-top:hover {
+    color: var(--v2-accent);
+}
+
+/* ---- Scroll-reveal staggered (controlled via IntersectionObserver) ---- */
+body.theme-v2 [data-v2-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+        opacity .7s cubic-bezier(.16,1,.3,1),
+        transform .7s cubic-bezier(.16,1,.3,1);
+    transition-delay: calc(var(--v2-stagger, 0) * 80ms);
+    will-change: transform, opacity;
+}
+
+body.theme-v2 [data-v2-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---- Scrollbar: single accent, quiet ---- */
+body.theme-v2 ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--v2-surface-3), var(--v2-border-emphasis));
+    border-radius: 4px;
+}
+
+body.theme-v2 ::-webkit-scrollbar-track {
+    background: var(--v2-surface-0);
+}
+
+/* ---- Mobile lang toggle: unify style ---- */
+body.theme-v2 .mobile-lang-toggle {
+    background: var(--v2-surface-2);
+    border: 1px solid var(--v2-border-subtle);
+    color: var(--v2-text-primary);
+    backdrop-filter: blur(12px);
+}
+
+body.theme-v2 .mobile-lang-toggle:hover {
+    border-color: var(--v2-border-hover);
+    color: var(--v2-accent);
+}
+
+/* ---- Disable legacy glitch (red/cyan) hover on cards ----
+   Conflicts with "NO chromatic aberration glitch" aesthetic. */
+body.theme-v2 .glitch-hover:hover {
+    animation: none;
+}
+
+body.theme-v2 .glitch-hover:hover::before,
+body.theme-v2 .glitch-hover:hover::after {
+    animation: none;
+    background: transparent;
+}
+
+/* Soften the floating animation — lower amplitude so tilt reads clean */
+body.theme-v2 .crown-jewel.floating {
+    animation: v2-float-soft 7s ease-in-out infinite;
+}
+
+@keyframes v2-float-soft {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-4px); }
+}
+
+/* ---- Reduced motion safety ---- */
+@media (prefers-reduced-motion: reduce) {
+    body.theme-v2 .hero-visual .hv-caret,
+    body.theme-v2 .hero-meta .dot {
+        animation: none;
+    }
+
+    body.theme-v2 [data-v2-reveal] {
+        transition: none;
+        opacity: 1;
+        transform: none;
+    }
+}
