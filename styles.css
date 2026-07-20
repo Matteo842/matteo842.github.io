@@ -965,14 +965,13 @@ h4 {
     z-index: 9999;
     opacity: 0;
     visibility: hidden;
-    transform: scale(0.8);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
 }
 
 .context-menu.active {
     opacity: 1;
     visibility: visible;
-    transform: scale(1);
+    pointer-events: auto;
 }
 
 .context-menu-inner {
@@ -1002,26 +1001,48 @@ h4 {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 12px;
+    padding: 8px 12px;
+    font-family: var(--font-mono);
     font-size: 0.9rem;
     color: var(--text-primary);
-    border-radius: 8px;
+    border-radius: 0;
     cursor: pointer;
-    transition: all 0.15s ease;
 }
 
 .context-menu-item:hover {
-    background: rgba(0, 212, 255, 0.15);
-    color: var(--neon-blue);
+    background: transparent;
+    color: #e8a84a;
 }
 
 .context-menu-item.active {
-    background: rgba(0, 212, 255, 0.1);
-    color: var(--neon-blue);
+    background: transparent;
+    color: #e8a84a;
+    box-shadow: none;
+}
+
+.context-menu-item.active::after {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 14px;
+    margin-left: 2px;
+    background: #e8a84a;
+    flex-shrink: 0;
+    animation: terminal-cursor-blink 1.05s step-end infinite;
 }
 
 .context-menu-item .flag {
     font-size: 1.2rem;
+}
+
+@keyframes terminal-cursor-blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
 }
 
 /* ---- Mobile Language Toggle ---- */

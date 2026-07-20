@@ -811,11 +811,40 @@ body.theme-v2 .mobile-lang-toggle {
     border: 1px solid var(--v2-border-subtle);
     color: var(--v2-text-primary);
     backdrop-filter: blur(12px);
+    box-shadow: none;
 }
 
 body.theme-v2 .mobile-lang-toggle:hover {
     border-color: var(--v2-border-hover);
     color: var(--v2-accent);
+}
+
+body.theme-v2 .lang-toggle-indicator {
+    background: var(--v2-accent);
+    color: #1a0f00;
+}
+
+/* ---- Context menu: amber accent, no animation lag ---- */
+body.theme-v2 .context-menu-inner {
+    background: var(--v2-surface-2);
+    border: 1px solid var(--v2-border-emphasis);
+    box-shadow: var(--v2-shadow-elev);
+    backdrop-filter: blur(16px);
+}
+
+body.theme-v2 .context-menu-item:hover {
+    background: transparent;
+    color: var(--v2-accent-strong);
+}
+
+body.theme-v2 .context-menu-item.active {
+    background: transparent;
+    color: var(--v2-accent-strong);
+    box-shadow: none;
+}
+
+body.theme-v2 .context-menu-item.active::after {
+    background: var(--v2-accent);
 }
 
 /* ---- Disable legacy glitch (red/cyan) hover on cards ----

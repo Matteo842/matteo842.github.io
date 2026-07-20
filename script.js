@@ -74,29 +74,18 @@ function showContextMenu(x, y) {
 
     contextMenu.style.left = `${x}px`;
     contextMenu.style.top = `${y}px`;
+    contextMenu.style.opacity = '';
+    contextMenu.style.transform = '';
     contextMenu.classList.add('active');
     menuVisible = true;
-
-    // GSAP animation
-    gsap.fromTo(contextMenu,
-        { scale: 0.8, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.2, ease: 'back.out(2)' }
-    );
 }
 
 function hideContextMenu() {
     if (!menuVisible) return;
-
-    gsap.to(contextMenu, {
-        scale: 0.8,
-        opacity: 0,
-        duration: 0.15,
-        ease: 'power2.in',
-        onComplete: () => {
-            contextMenu.classList.remove('active');
-            menuVisible = false;
-        }
-    });
+    contextMenu.classList.remove('active');
+    contextMenu.style.opacity = '';
+    contextMenu.style.transform = '';
+    menuVisible = false;
 }
 
 // Prevent default context menu and show custom one
@@ -169,12 +158,6 @@ if (mobileToggle) {
         document.querySelectorAll('.lang-option').forEach(opt => {
             opt.classList.toggle('active', opt.dataset.lang === newLang);
         });
-
-        // Animate toggle
-        gsap.fromTo(mobileToggle,
-            { scale: 0.9 },
-            { scale: 1, duration: 0.3, ease: 'elastic.out(1, 0.5)' }
-        );
     });
 }
 
