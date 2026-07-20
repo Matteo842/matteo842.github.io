@@ -1961,6 +1961,15 @@ footer {
     color: var(--neon-green);
 }
 
+.trust-badge a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.trust-badge a:hover strong {
+    text-decoration: underline;
+}
+
 .trust-icon {
     font-size: 1.1rem;
 }
