@@ -1,6 +1,7 @@
 // ---- ASCII Rain Background Generator (Layered Parallax) for About Page ----
 let rainAnimationId; // Store ID to cancel loop on resize
 const frontDrops = []; // Store front drop objects
+let lastRainTime = 0;
 
 function initAboutRain() {
     const container = document.getElementById('about-rain-container');
@@ -11,6 +12,7 @@ function initAboutRain() {
 
     container.innerHTML = ''; // Clear content
     frontDrops.length = 0; // Clear array
+    lastRainTime = 0;
 
     // Create Layers
     const layers = ['layer-back', 'layer-mid', 'layer-front'];
@@ -53,7 +55,7 @@ function initAboutRain() {
             const drop = document.createElement('div');
             drop.className = 'ascii-drop';
             drop.textContent = asciiChars[Math.floor(Math.random() * asciiChars.length)];
-            drop.style.color = 'rgba(67, 194, 239, 0.7)'; // Increased opacity for back layers visibility
+            drop.style.color = 'rgba(67, 194, 239, 0.7)';
             drop.style.left = `${Math.random() * 100}%`;
 
             const size = settings.sizeRange[0] + Math.random() * (settings.sizeRange[1] - settings.sizeRange[0]);
@@ -68,11 +70,12 @@ function initAboutRain() {
         }
     });
 
-    // --- 2. Generate Front Layer (JS Animated) ---
+    // --- 2. Generate Front Layer (JS Animated, frame-rate independent) ---
+    // Speed matches the old per-frame formula at 60fps (live Firefox feel),
+    // but expressed in px/s so Chrome @144Hz stays the same.
     const frontSettings = {
-        density: 50000, // Reduced density (was 20000)
-        sizeRange: [16, 24],
-        speedRange: [3, 5] // Roughly pixels per frame? No, we'll map speed to pixels
+        density: 50000,
+        sizeRange: [16, 24]
     };
 
     const frontCount = Math.floor(area / frontSettings.density);
@@ -82,7 +85,7 @@ function initAboutRain() {
         const dropEl = document.createElement('div');
         dropEl.className = 'front-drop';
         dropEl.textContent = asciiChars[Math.floor(Math.random() * asciiChars.length)];
-        dropEl.style.color = 'rgba(67, 194, 239, 0.95)'; // Front layer brighter
+        dropEl.style.color = 'rgba(67, 194, 239, 0.95)';
 
         const size = frontSettings.sizeRange[0] + Math.random() * (frontSettings.sizeRange[1] - frontSettings.sizeRange[0]);
         dropEl.style.fontSize = `${size}px`;
@@ -90,63 +93,65 @@ function initAboutRain() {
 
         frontLayerEl.appendChild(dropEl);
 
-        // Physics properties
-        const speedMultiplier = Math.random() * (1.5 - 0.8) + 0.8;
-        const speed = (height / 200) * speedMultiplier; // px per frame approx
+        const speedMultiplier = 0.8 + Math.random() * 0.7; // 0.8–1.5
+        // Old per-frame @ ~60fps → px/s, then ×1.25 toward live Firefox feel
+        const speed = (height / 200) * speedMultiplier * 60 * 1.25;
 
         frontDrops.push({
             element: dropEl,
             x: Math.random() * width,
-            y: Math.random() * height * -1, // Start above viewport
+            y: Math.random() * height * -1,
             speed: speed,
-            resetY: Math.random() * -500 - 50 // Reset position
+            size: size,
+            resetY: Math.random() * -500 - 50
         });
     }
 
-    // --- 3. Animation Loop ---
-    function animate() {
+    // --- 3. Animation Loop (delta-time so 60Hz ≈ 144Hz) ---
+    function animate(now) {
+        if (!lastRainTime) lastRainTime = now;
+        // Cap dt so tabbing back in doesn't teleport drops
+        const dt = Math.min((now - lastRainTime) / 1000, 0.05);
+        lastRainTime = now;
+
         if (!aboutBox) {
-            // If box not found (e.g. wrong page), just fall
-            updateRainNoCollision(height);
+            updateRainNoCollision(height, dt);
         } else {
-            // Check collision
             const boxRect = aboutBox.getBoundingClientRect();
-            // We only care about the top border area
-            // boxRect.top is relative to viewport
-            updateRainWithCollision(height, boxRect, frontLayerEl);
+            updateRainWithCollision(height, boxRect, frontLayerEl, dt);
         }
 
         rainAnimationId = requestAnimationFrame(animate);
     }
 
-    animate();
+    rainAnimationId = requestAnimationFrame(animate);
 }
 
-function updateRainWithCollision(windowHeight, boxRect, container) {
-    const splashThreshold = 10; // Hitbox height at top of box
+function updateRainWithCollision(windowHeight, boxRect, container, dt) {
+    const roof = boxRect.top;
 
     frontDrops.forEach(drop => {
-        drop.y += drop.speed;
+        const prevY = drop.y;
+        const step = drop.speed * dt;
+        drop.y += step;
 
-        // Apply Transform
-        drop.element.style.transform = `translate3d(${drop.x}px, ${drop.y}px, 0)`;
+        // Hit with the glyph bottom (not the transform origin / old -50px offset)
+        const glyphBottom = drop.size * 0.85;
+        const prevHit = prevY + glyphBottom;
+        const hit = drop.y + glyphBottom;
 
-        // Collision Check
-        // 1. Check if vertically at the top border of the box
-        if (drop.y >= boxRect.top && drop.y <= boxRect.top + drop.speed + splashThreshold) {
-            // 2. Check if horizontally within the box
-            if (drop.x >= boxRect.left && drop.x <= boxRect.right) {
-                // COLLISION!
-                createSplash(drop.x, boxRect.top, container);
-
-                // Reset Drop
-                drop.y = drop.resetY;
-                drop.x = Math.random() * window.innerWidth;
-                return; // Next drop
-            }
+        if (prevHit < roof && hit >= roof
+            && drop.x >= boxRect.left && drop.x <= boxRect.right) {
+            const snapY = roof - glyphBottom;
+            drop.element.style.transform = `translate3d(${drop.x}px, ${snapY}px, 0)`;
+            createShatter(drop.x, roof, container, drop);
+            drop.y = drop.resetY;
+            drop.x = Math.random() * window.innerWidth;
+            return;
         }
 
-        // Reset if off screen bottom
+        drop.element.style.transform = `translate3d(${drop.x}px, ${drop.y}px, 0)`;
+
         if (drop.y > windowHeight) {
             drop.y = drop.resetY;
             drop.x = Math.random() * window.innerWidth;
@@ -154,9 +159,9 @@ function updateRainWithCollision(windowHeight, boxRect, container) {
     });
 }
 
-function updateRainNoCollision(windowHeight) {
+function updateRainNoCollision(windowHeight, dt) {
     frontDrops.forEach(drop => {
-        drop.y += drop.speed;
+        drop.y += drop.speed * dt;
         drop.element.style.transform = `translate3d(${drop.x}px, ${drop.y}px, 0)`;
         if (drop.y > windowHeight) {
             drop.y = drop.resetY;
@@ -165,17 +170,38 @@ function updateRainNoCollision(windowHeight) {
     });
 }
 
-function createSplash(x, y, container) {
-    const splash = document.createElement('div');
-    splash.className = 'rain-splash';
-    splash.style.left = `${x}px`;
-    splash.style.top = `${y}px`;
-    container.appendChild(splash);
+const SHARD_CHARS = '!@#$%&*+=<>?/\\|01Xx';
 
-    // Auto remove after animation
-    setTimeout(() => {
-        splash.remove();
-    }, 400);
+function createShatter(x, y, container, drop) {
+    const pieceCount = 2 + Math.floor(Math.random() * 2); // 2 or 3
+    const baseSize = drop.size || 16;
+    const sourceChar = drop.element.textContent;
+
+    for (let i = 0; i < pieceCount; i++) {
+        const shard = document.createElement('div');
+        shard.className = 'rain-shard';
+        shard.textContent = i === 0
+            ? sourceChar
+            : SHARD_CHARS[Math.floor(Math.random() * SHARD_CHARS.length)];
+
+        const angle = (-Math.PI * 0.85) + Math.random() * (Math.PI * 0.7);
+        const dist = 18 + Math.random() * 36;
+        const dx = Math.cos(angle) * dist;
+        const dy = Math.sin(angle) * dist - 8;
+        const rot = (Math.random() * 140 - 70).toFixed(0) + 'deg';
+        const size = Math.max(8, baseSize * (0.45 + Math.random() * 0.35));
+
+        shard.style.left = `${x}px`;
+        shard.style.top = `${y}px`;
+        shard.style.fontSize = `${size}px`;
+        shard.style.setProperty('--dx', `${dx.toFixed(1)}px`);
+        shard.style.setProperty('--dy', `${dy.toFixed(1)}px`);
+        shard.style.setProperty('--rot', rot);
+        shard.style.setProperty('--dur', `${0.35 + Math.random() * 0.2}s`);
+
+        container.appendChild(shard);
+        shard.addEventListener('animationend', () => shard.remove(), { once: true });
+    }
 }
 
 // Initialize on load and resize
