@@ -1,13 +1,14 @@
 /* About Page Specific Styles */
 
-.about-hero {
+/* Fit one viewport: homepage .hero uses min-height:100vh + padding,
+   and .about-layout had 4rem vertical margins — that tiny overflow
+   causes the scrollbar on any resolution, not just 2K. */
+#about-page.hero {
+    min-height: 100dvh;
     min-height: 100vh;
-    display: flex;
+    /* Top clears fixed nav; keep sides/bottom tighter than default .hero */
+    padding: 5rem 1.5rem 1.5rem;
     justify-content: center;
-    align-items: center;
-    position: relative;
-    background: #000000;
-    overflow: hidden;
 }
 
 .about-layout {
@@ -17,16 +18,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    margin: 4rem auto;
-    /* Vertical spacing */
+    gap: 0.75rem;
+    margin: 0 auto;
 }
 
 .about-container {
     width: 100%;
     max-width: 750px;
     /* Wider container */
-    padding: 2.5rem;
+    padding: 2rem 2.5rem;
     min-height: auto;
     /* Allow it to shrink if needed */
     display: flex;
