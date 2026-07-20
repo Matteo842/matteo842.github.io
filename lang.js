@@ -27,18 +27,19 @@ const translations = {
 
     // Xtool Project Section
     xtool_title: "Xemu Tools Project",
-    xtool_subtitle: "Private Research // Classified",
+    xtool_subtitle: "Open Research Lab // QCOW2 + FATX",
 
     // Xemu Tools Section
-    xemu_badge: "CLASSIFIED",
+    xemu_badge: "PUBLIC R&D",
     xemu_title: "Xemu Tools",
-    xemu_codename: "(Code Name)",
-    xemu_subtitle: "Low-level Xbox HDD Manipulation",
-    xemu_desc: "An advanced Python-based research project (currently 6 months in development). It performs surgical extraction and restoration of save files directly from Xbox HDD images (FATX file system) without mounting the drive.",
+    xemu_subtitle: "Surgical Xbox save extract & restore for xemu",
+    xemu_desc: "~1 year of forensics on QCOW2+FATX. To our knowledge, the first stack that can surgically extract a first-gen Xbox save from an xemu virtual HDD and put it back correctly — including on disks where that game was never launched. Lab is open; players use it through SaveState 3.0.",
     xemu_tech: "Tech Highlight:",
-    xemu_tech_desc: "Handles FAT16/32 clustering, orphaned clusters, and smart adjacency fixes. Currently running 100+ daily automated tests.",
+    xemu_tech_desc: "Guest-aware QCOW2 (L1/L2), XBSV v7 envelopes, allocate-on-write for virgin/sparse disks, FATX remap for multi-game HDDs — QEMU-free pure Python.",
     xemu_status: "Status:",
-    xemu_status_value: "Private Alpha / Research Prototype",
+    xemu_status_value: "Open lab · Engine in SaveState 3.0",
+    xemu_github: "GitHub Lab",
+    xemu_savestate: "Via SaveState 3.0",
 
     // Luna's Apartment Section
     luna_title: "Luna's Apartment",
@@ -139,18 +140,19 @@ const translations = {
 
     // Xtool Project Section
     xtool_title: "Xemu Tools Project",
-    xtool_subtitle: "Private Forschung // Vertraulich",
+    xtool_subtitle: "Offenes Forschungslabor // QCOW2 + FATX",
 
     // Xemu Tools Section
-    xemu_badge: "VERTRAULICH",
+    xemu_badge: "ÖFFENTLICHE F&E",
     xemu_title: "Xemu Tools",
-    xemu_codename: "(Codename)",
-    xemu_subtitle: "Low-Level Xbox-HDD-Manipulation",
-    xemu_desc: "Ein fortgeschrittenes Python-basiertes Forschungsprojekt (derzeit 6 Monate in Entwicklung). Es führt chirurgische Extraktion und Wiederherstellung von Speicherdateien direkt aus Xbox-HDD-Images (FATX-Dateisystem) ohne Laufwerksmontage durch.",
+    xemu_subtitle: "Chirurgisches Xbox-Save-Extract & Restore für xemu",
+    xemu_desc: "~1 Jahr Forensik an QCOW2+FATX. Nach unserem Kenntnisstand der erste Stack, der einen Xbox-Original-Save chirurgisch aus einer xemu-Virtual-HDD extrahieren und korrekt zurückschreiben kann — auch auf Disks, auf denen das Spiel nie gestartet wurde. Das Lab ist offen; Spieler nutzen es über SaveState 3.0.",
     xemu_tech: "Technisches Highlight:",
-    xemu_tech_desc: "Behandelt FAT16/32-Clustering, verwaiste Cluster und intelligente Adjacency-Fixes. Führt derzeit 100+ tägliche automatisierte Tests durch.",
+    xemu_tech_desc: "Guest-aware QCOW2 (L1/L2), XBSV-v7-Envelopes, Allocate-on-write für virgin/sparse Disks, FATX-Remap für Multi-Game-HDDs — QEMU-frei in purem Python.",
     xemu_status: "Status:",
-    xemu_status_value: "Private Alpha / Forschungsprototyp",
+    xemu_status_value: "Offenes Lab · Engine in SaveState 3.0",
+    xemu_github: "GitHub Lab",
+    xemu_savestate: "Über SaveState 3.0",
 
     // Luna's Apartment Section
     luna_title: "Luna's Apartment",
