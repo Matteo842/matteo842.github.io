@@ -159,8 +159,10 @@ document.querySelectorAll('.lang-option').forEach(option => {
 // ---- Mobile Language Toggle ----
 const mobileToggle = document.getElementById('mobile-lang-toggle');
 if (mobileToggle) {
+    const langCycle = ['en', 'de', 'it'];
     mobileToggle.addEventListener('click', () => {
-        const newLang = currentLang === 'en' ? 'de' : 'en';
+        const idx = langCycle.indexOf(currentLang);
+        const newLang = langCycle[(idx === -1 ? 0 : idx + 1) % langCycle.length];
         updateLanguage(newLang);
 
         // Update context menu active states
