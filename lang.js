@@ -57,6 +57,16 @@ const translations = {
     android_status_value: "In Development",
     android_github: "GitHub Repo",
 
+    // Wallfinch Section
+    wallfinch_title: "Wallfinch",
+    wallfinch_subtitle: "Wallpaper Finder · Windows",
+    wallfinch_tech: "Rust",
+    wallfinch_desc: "Searches many wallpaper sites at once, shows only pictures that fit your screen and sets them in one click. Free with no limits; a one-time Plus adds tools that run on your PC.",
+    wallfinch_point1: "› egui UI · Windows now, Android next",
+    wallfinch_point2: "› On-device AI upscaling (ONNX Runtime + DirectML)",
+    wallfinch_point3: "› Ed25519-signed remote config and licenses",
+    wallfinch_visit: "Visit Site",
+
     // EasyFPS Section
     easyfps_title: "EasyFPS",
     easyfps_subtitle: "Lightweight FPS Overlay · Windows",
@@ -181,6 +191,16 @@ const translations = {
     android_status_value: "In Entwicklung",
     android_github: "GitHub Repo",
 
+    // Wallfinch Section
+    wallfinch_title: "Wallfinch",
+    wallfinch_subtitle: "Wallpaper-Finder · Windows",
+    wallfinch_tech: "Rust",
+    wallfinch_desc: "Durchsucht viele Wallpaper-Seiten gleichzeitig, zeigt nur Bilder, die zu deinem Bildschirm passen, und setzt sie mit einem Klick. Kostenlos und ohne Limits; ein einmaliges Plus bringt Werkzeuge, die auf deinem PC laufen.",
+    wallfinch_point1: "› egui-UI · jetzt Windows, bald Android",
+    wallfinch_point2: "› KI-Upscaling auf dem Gerät (ONNX Runtime + DirectML)",
+    wallfinch_point3: "› Mit Ed25519 signierte Remote-Konfiguration und Lizenzen",
+    wallfinch_visit: "Website besuchen",
+
     // EasyFPS Section
     easyfps_title: "EasyFPS",
     easyfps_subtitle: "Leichtgewichtiges FPS-Overlay · Windows",
@@ -304,6 +324,16 @@ const translations = {
     android_status: "Status:",
     android_status_value: "In sviluppo",
     android_github: "Repo GitHub",
+
+    // Wallfinch Section
+    wallfinch_title: "Wallfinch",
+    wallfinch_subtitle: "Cerca sfondi · Windows",
+    wallfinch_tech: "Rust",
+    wallfinch_desc: "Cerca su molti siti di sfondi insieme, mostra solo le immagini adatte al tuo schermo e le imposta con un clic. Gratis e senza limiti; un Plus una tantum aggiunge strumenti che girano sul PC.",
+    wallfinch_point1: "› UI in egui · ora Windows, poi Android",
+    wallfinch_point2: "› Upscaling AI sul dispositivo (ONNX Runtime + DirectML)",
+    wallfinch_point3: "› Config remota e licenze firmate con Ed25519",
+    wallfinch_visit: "Visita il sito",
 
     // EasyFPS Section
     easyfps_title: "EasyFPS",

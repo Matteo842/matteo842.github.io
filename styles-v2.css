@@ -623,6 +623,10 @@ body.theme-v2 .projects-grid-2 {
     margin-top: 1.25rem;
 }
 
+body.theme-v2 .projects-grid-2 > #wallfinch {
+    grid-column: span 12;
+}
+
 body.theme-v2 .projects-grid-2 > #xemu {
     grid-column: span 7;
 }
@@ -642,7 +646,36 @@ body.theme-v2 #android .flex-grow {
     margin: 0.5rem 0;
 }
 
+/* Wallfinch: app icon beside the text, gold title from the icon */
+body.theme-v2 #wallfinch .wallfinch-layout {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    flex: 1;
+}
+
+body.theme-v2 #wallfinch .wallfinch-icon {
+    flex: none;
+    width: 96px;
+    height: 96px;
+}
+
+body.theme-v2 #wallfinch .wallfinch-body {
+    flex: 1;
+    min-width: 0;
+    align-self: stretch;
+}
+
+body.theme-v2 #wallfinch .wallfinch-body > p {
+    max-width: 42rem;
+}
+
+body.theme-v2 #wallfinch .wallfinch-title {
+    color: #e6b94f;
+}
+
 /* EasyFPS accent: rust-themed tech badge inside the card */
+body.theme-v2 #wallfinch .tech-badge,
 body.theme-v2 #easyfps .tech-badge {
     display: inline-flex;
     align-items: center;
@@ -657,6 +690,7 @@ body.theme-v2 #easyfps .tech-badge {
     letter-spacing: -0.005em;
 }
 
+body.theme-v2 #wallfinch .tech-badge::before,
 body.theme-v2 #easyfps .tech-badge::before {
     content: '';
     width: 6px;
@@ -671,11 +705,21 @@ body.theme-v2 #easyfps .tech-badge::before {
         grid-auto-rows: auto;
     }
 
+    body.theme-v2 .projects-grid-2 > #wallfinch,
     body.theme-v2 .projects-grid-2 > #xemu,
     body.theme-v2 .projects-grid-2 > #luna,
     body.theme-v2 .projects-grid-2 > #android,
     body.theme-v2 .projects-grid-2 > #easyfps {
         grid-column: span 1;
+    }
+
+    body.theme-v2 #wallfinch .wallfinch-layout {
+        gap: 1rem;
+    }
+
+    body.theme-v2 #wallfinch .wallfinch-icon {
+        width: 56px;
+        height: 56px;
     }
 }
 

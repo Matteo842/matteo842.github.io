@@ -48,7 +48,7 @@
 
   <!-- Custom Styles -->
   <link rel="stylesheet" href="styles.css?v=6">
-  <link rel="stylesheet" href="styles-v2.css?v=1">
+  <link rel="stylesheet" href="styles-v2.css?v=2">
   <link rel="stylesheet" href="video-player.css">
 </head>
 
@@ -226,6 +226,48 @@
 
     <!-- ---- Grid: Other Projects ---- -->
     <div class="projects-grid-2 mt-8">
+
+      <!-- ---- WALLFINCH: Wallpaper finder ---- -->
+      <article class="glass-card p-6 flex flex-col" id="wallfinch">
+        <div class="wallfinch-layout">
+          <img src="assets/wallfinch.svg" alt="Wallfinch icon" class="wallfinch-icon" width="96" height="96">
+          <div class="wallfinch-body flex flex-col">
+            <div class="flex items-start justify-between mb-4">
+              <div>
+                <h3 class="text-2xl font-bold mb-1">
+                  <span class="wallfinch-title" data-i18n="wallfinch_title">Wallfinch</span>
+                </h3>
+                <p class="text-slate-400 font-mono text-sm" data-i18n="wallfinch_subtitle">Wallpaper Finder &middot; Windows</p>
+              </div>
+              <span class="tech-badge" data-i18n="wallfinch_tech">Rust</span>
+            </div>
+
+            <p class="text-slate-300 text-sm mb-4" data-i18n="wallfinch_desc">
+              Searches many wallpaper sites at once, shows only pictures that fit your screen and sets them in one
+              click. Free with no limits; a one-time Plus adds tools that run on your PC.
+            </p>
+
+            <ul class="text-slate-400 text-xs font-mono mb-4 space-y-1">
+              <li data-i18n="wallfinch_point1">&rsaquo; egui UI &middot; Windows now, Android next</li>
+              <li data-i18n="wallfinch_point2">&rsaquo; On-device AI upscaling (ONNX Runtime + DirectML)</li>
+              <li data-i18n="wallfinch_point3">&rsaquo; Ed25519-signed remote config and licenses</li>
+            </ul>
+
+            <div class="mt-auto">
+              <a href="https://wallfinch.com" target="_blank" rel="noopener" class="neon-btn"
+                style="--neon-blue: #e6b94f; border-color: #e6b94f;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+                <span data-i18n="wallfinch_visit">Visit Site</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
 
       <!-- ---- XEMU TOOLS: Public R&D ---- -->
       <article class="glass-card classified-card p-6 relative overflow-hidden flex flex-col" id="xemu">
